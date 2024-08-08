@@ -53,8 +53,7 @@ namespace JiaoLongWMI.Models
 
         public int getCurrentDiskusage(out double freesize, out double totalsize)
         {
-            string script =
-                "Get-CimInstance Win32_Diskdrive -PipelineVariable disk |Where-Object {$_.DeviceID -eq '\\\\.\\PHYSICALDRIVE0'}|% { Get-CimAssociatedInstance $_ -ResultClass Win32_DiskPartition -pv partition}|% { Get-CimAssociatedInstance $_ -ResultClassName Win32_LogicalDisk } |Select-Object @{n='Disk';e={$disk.deviceid}},VolumeName,Size,FreeSpace";
+            string script = "Get-CimInstance Win32_Diskdrive -PipelineVariable disk |Where-Object {$_.DeviceID -eq '\\\\.\\PHYSICALDRIVE0'}|% { Get-CimAssociatedInstance $_ -ResultClass Win32_DiskPartition -pv partition}|% { Get-CimAssociatedInstance $_ -ResultClassName Win32_LogicalDisk } |Select-Object @{n='Disk';e={$disk.deviceid}},VolumeName,Size,FreeSpace";
             Collection<PSObject> collection = PowerShell.Create().AddScript(script).Invoke();
             freesize = 0.0;
             totalsize = 0.0;

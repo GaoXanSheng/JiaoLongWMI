@@ -28,8 +28,6 @@ public class CLI_Program_Enumeration_Type
             case "SetCpuShortPower": return CPU.SetCpuShortPower(byte.Parse(args[1])).ToString();
             case "SetCpuLongPower": return CPU.SetCpuLongPower(byte.Parse(args[1])).ToString();
             case "SetCPUTempWall": return CPU.SetCPUTempWall(byte.Parse(args[1])).ToString();
-            case "GetCPUPower": return CPU.GetCPUPower().ToString();
-            case "GetCPUTempWall": return CPU.GetCPUTempWall().ToString();
             default: return "false";
         }
     }

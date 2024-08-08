@@ -29,24 +29,13 @@ public class CPU
         });
     }
 
-    public static bool SetCPUTempWall(byte inputCPUPower)
+    public static bool SetCPUTempWall(byte tempwall)
     {
 
         return WMIMethodServices.SetValue(WMIMethodName.CPUPower, new byte[2]
         {
             (byte)WMICPUPower.CPUTempWallState,
-            inputCPUPower
+            tempwall
         });
-    }
-
-    public static WMICPUPower GetCPUPower()
-    {
-        return WMIMethodServices.GetValue<WMICPUPower>(WMIMethodName.CPUPower);
-
-    }
-
-    public static WMISystemPerMode GetCPUTempWall()
-    {
-        return WMIMethodServices.GetValue<WMISystemPerMode>(WMIMethodName.CPUThermometer);
     }
 }

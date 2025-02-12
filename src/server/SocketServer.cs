@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 using JiaoLongWMI.tools;
+using Newtonsoft.Json.Linq;
 
 namespace JiaoLongWMI.server;
 
@@ -79,7 +80,13 @@ public class SocketServer
 
     private string Decode(string msg)
     {
-        string[] programArgs = msg.Split("-");
+        // msg是个json 提取msg
+        // 解析 JSON 字符串
+        JObject json = JObject.Parse(msg);
+
+        // 提取 "message" 字段
+        string message = json["CMD"].ToString();
+        string[] programArgs = message.Split("-");
         string programTitle = programArgs[0];
         string[] function = new string[99];
         for (int i = 1; i < programArgs.Length; i++)

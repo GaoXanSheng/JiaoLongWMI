@@ -7,14 +7,14 @@ namespace JiaoLongWMI.WMIOperation.Method
     private static void PrintByteArray(byte[] data)
     {
       for (int index = 0; index < 8; ++index)
-        Console.WriteLine("{0:X}", (object) data[index]);
+        Console.WriteLine("{0:X}", data[index]);
     }
 
     private static byte[] _MakeMethodPrams(MethodType wMIMethodType, MethodName wMIMethodName)
     {
       byte[] numArray = new byte[32];
       for (int index = 0; index < numArray.Length; ++index)
-        numArray[index] = (byte) 0;
+        numArray[index] =  0;
       numArray[1] = (byte) wMIMethodType;
       numArray[3] = (byte) wMIMethodName;
       return numArray;
@@ -27,16 +27,16 @@ namespace JiaoLongWMI.WMIOperation.Method
       {
         if (typeof (T) == typeof (Tuple<int, int>))
           return (T)(object) new Tuple<int, int>(-1, -1);
-        return typeof (T) == typeof (Tuple<int, int, int>) ? (T)(object) new Tuple<int, int, int>(-1, -1, -1) : (T)(object) (ValueType) byte.MaxValue;
+        return typeof (T) == typeof (Tuple<int, int, int>) ? (T)(object) new Tuple<int, int, int>(-1, -1, -1) : (T)(object) byte.MaxValue;
       }
       MethodServices.PrintByteArray(tuple.Item2);
       if (typeof (T) == typeof (Tuple<int, int>))
-        return (T)(object) new Tuple<int, int>(((int) tuple.Item2[5] << 8) + (int) tuple.Item2[4], ((int) tuple.Item2[7] << 8) + (int) tuple.Item2[6]);
+        return (T)(object) new Tuple<int, int>((tuple.Item2[5] << 8) +tuple.Item2[4], (tuple.Item2[7] << 8) + tuple.Item2[6]);
       if (!(typeof (T) == typeof (Tuple<int, int, int>)))
-        return (T)(object) (ValueType) tuple.Item2[4];
-      int num1 = (int) tuple.Item2[4];
-      int num2 = (int) tuple.Item2[5];
-      int num3 = (int) tuple.Item2[6];
+        return (T)(object)tuple.Item2[4];
+      int num1 = tuple.Item2[4];
+      int num2 = tuple.Item2[5];
+      int num3 = tuple.Item2[6];
       int num4 = num2;
       int num5 = num3;
       return (T)(object) new Tuple<int, int, int>(num1, num4, num5);
@@ -45,11 +45,11 @@ namespace JiaoLongWMI.WMIOperation.Method
     public static bool SetValue(MethodName wMIMethodName, object setvalue)
     {
       bool flag = true;
-      byte[] numArray = MethodServices._MakeMethodPrams(MethodType.Set, wMIMethodName);
+      byte[] numArray = _MakeMethodPrams(MethodType.Set, wMIMethodName);
       numArray[4] = (byte) setvalue;
       Console.WriteLine("SetMethod inparms:");
-      MethodServices.PrintByteArray(numArray);
-      if (!MethodServices.ExcMethod(numArray).Item1)
+      PrintByteArray(numArray);
+      if (!ExcMethod(numArray).Item1)
         flag = false;
       return flag;
     }
@@ -69,22 +69,20 @@ namespace JiaoLongWMI.WMIOperation.Method
 
     public static Tuple<bool, byte[]> ExcMethod(byte[] inData)
     {
-      if (inData == null)
-        return new Tuple<bool, byte[]>(false, (byte[]) null);
       if (inData.Length != 32)
-        return new Tuple<bool, byte[]>(false, (byte[]) null);
-      MethodServices.PrintByteArray(inData);
+        return new Tuple<bool, byte[]>(false,null);
+      PrintByteArray(inData);
       try
       {
-        ManagementObject managementObject = new ManagementObject("root\\WMI", "MICommonInterface.InstanceName='ACPI\\PNP0C14\\MIFS_0'", (ObjectGetOptions) null);
+        ManagementObject managementObject = new ManagementObject("root\\WMI", "MICommonInterface.InstanceName='ACPI\\PNP0C14\\MIFS_0'", null);
         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("MiInterface");
-        methodParameters["InData"] = (object) inData;
-        return new Tuple<bool, byte[]>(true, managementObject.InvokeMethod("MiInterface", methodParameters, (InvokeMethodOptions) null)["OutData"] as byte[]);
+        methodParameters["InData"] = inData;
+        return new Tuple<bool, byte[]>(true, managementObject.InvokeMethod("MiInterface", methodParameters, null)["OutData"] as byte[]);
       }
       catch (ManagementException ex)
       {
         Console.WriteLine("An error occurred while trying to execute the WMI method: " + ex.Message);
-        return new Tuple<bool, byte[]>(false, (byte[]) null);
+        return new Tuple<bool, byte[]>(false,null);
       }
     }
   }

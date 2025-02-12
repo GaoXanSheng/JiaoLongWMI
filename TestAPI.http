@@ -1,0 +1,15 @@
+﻿### LOGO灯关
+POST http://localhost:9871/
+Content-Type: application/json
+
+{
+  "CMD":"LogoLight-SetLogoLight-0"
+}
+### LOGO灯开
+POST http://localhost:9871/
+Content-Type: application/json
+
+{
+  "CMD":"LogoLight-SetLogoLight-1"
+}
+

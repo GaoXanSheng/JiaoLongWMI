@@ -1,6 +1,7 @@
-﻿using JiaoLong16Pro.server;
+﻿using JiaoLongWMI.server;
+using JiaoLongWMI.tools;
 
-namespace JiaoLong16Pro
+namespace JiaoLongWMI
 {
     internal static class Program
     {
@@ -12,21 +13,21 @@ namespace JiaoLong16Pro
         {
             if (args.Length != 0)
             {
-                string[] ProgramArgs = args[0].Split("-");
-                string ProgramTitle = ProgramArgs[0];
+                string[] programArgs = args[0].Split("-");
+                string programTitle = programArgs[0];
                 string[] function = new string[99];
-                for (int i = 1; i < ProgramArgs.Length; i++)
+                for (int i = 1; i < programArgs.Length; i++)
                 {
-                    function.SetValue(ProgramArgs[i], i - 1);
+                    function.SetValue(programArgs[i], i - 1);
                 }
 
-                if (ProgramTitle=="Socket")
+                if (programTitle=="Socket")
                 {
-                    socketServer socket = new socketServer(function);
+                    SocketServer socket = new SocketServer(function);
                 }
                 else
                 {
-                    Console.WriteLine(new CLI_Program_Enumeration_Type().eumType(ProgramTitle, function));
+                    Console.WriteLine(new CliProgramEnumerationType().EumType(programTitle, function));
                 }
             }
         }

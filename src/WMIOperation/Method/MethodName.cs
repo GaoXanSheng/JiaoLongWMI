@@ -1,6 +1,6 @@
-﻿namespace JiaoLong16Pro.BLD.WMIOperation
+﻿namespace JiaoLongWMI.WMIOperation.Method
 {
-    public enum WMIMethodName
+    public enum MethodName
     {
         SystemPerMode = 8,
         GPUMode,

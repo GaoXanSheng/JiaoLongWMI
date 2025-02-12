@@ -1,18 +1,17 @@
-﻿using JiaoLong16Pro.BLD.WMIOperation;
-using JiaoLong16Pro.Models;
-using JiaoLong16Pro.server;
+﻿using JiaoLong16Pro.Models;
+using JiaoLongWMI.Models;
 
-namespace JiaoLong16Pro;
+namespace JiaoLongWMI.tools;
 
-public class CLI_Program_Enumeration_Type
+public class CliProgramEnumerationType
 {
-    public string eumType(string type, string[] args)
+    public string EumType(string type, string[] args)
     {
         switch (type)
         {
             case "CPU": return CpuType(args);
             case "Fan": return FanType(args);
-            case "GPU": return GPUType(args);
+            case "GPU": return GpuType(args);
             case "Keyboard": return KeyboardType(args);
             case "LogoLight": return LogoLightType(args);
             case "PerformaceMode": return PerformaceModeType(args);
@@ -44,7 +43,7 @@ public class CLI_Program_Enumeration_Type
         }
     }
 
-    private string GPUType(string[] args)
+    private string GpuType(string[] args)
     {
         switch (args[0])
         {
@@ -60,16 +59,12 @@ public class CLI_Program_Enumeration_Type
         {
             case "GetRGBKeyboardColor":
                 return Keyboard.GetRGBKeyboardColor();
-                break;
             case "GetkeyboardLightBrightness":
                 return Keyboard.GetkeyboardLightBrightness().ToString();
-                break;
             case "GetKeyboardMode":
                 return Keyboard.GetKeyboardMode().ToString();
-                break;
             case "SetKeyboardMode":
                 return Keyboard.SetKeyboardMode().ToString();
-                break;
             case "SetRGBKeyboardColor":
                 return Keyboard.SetRGBKeyboardColor(byte.Parse(args[1]), byte.Parse(args[2]), byte.Parse(args[3]))
                     .ToString();

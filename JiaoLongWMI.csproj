@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>annotations</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
-    <StartupObject>JiaoLong16Pro.Program</StartupObject>
+    <StartupObject>JiaoLongWMI.Program</StartupObject>
     <ApplicationIcon>electron-icon.ico</ApplicationIcon>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
     <SignAssembly>False</SignAssembly>
@@ -44,6 +44,10 @@
     <PackageReference Include="System.Diagnostics.EventLog" Version="9.0.0-preview.1.24080.9" />
     <PackageReference Include="System.Management" Version="8.0.0" />
     <PackageReference Include="System.Management.Automation" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\" />
   </ItemGroup>
 
 </Project>

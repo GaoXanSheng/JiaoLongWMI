@@ -1,6 +1,6 @@
-﻿namespace JiaoLong16Pro.BLD.WMIOperation
+﻿namespace JiaoLongWMI.WMIOperation.Keyboard
 {
-    public enum WMIRGBKeyboardMode : byte
+    public enum RGBKeyboardMode : byte
     {
         Mode_Off = 0,
         Mode_RGBFixedMode =2,

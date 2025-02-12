@@ -1,6 +1,6 @@
-﻿namespace JiaoLong16Pro.BLD.WMIOperation
+﻿namespace JiaoLongWMI.WMIOperation.Keyboard
 {
-    public enum WMIRGBKeyboardBrightnessLevel : byte
+    public enum RGBKeyboardBrightnessLevel : byte
     {
         Level_0,
         Level_1,

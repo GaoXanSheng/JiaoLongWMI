@@ -1,18 +1,20 @@
-﻿using JiaoLong16Pro.BLD.WMIOperation;
+﻿
 using System.Runtime.InteropServices;
-using JiaoLongWMI.Models;
+using JiaoLongWMI.WMIOperation;
+using JiaoLongWMI.WMIOperation.Method;
+using JiaoLongWMI.WMIOperation.System;
 
-namespace JiaoLong16Pro.Models;
+namespace JiaoLongWMI.Models;
 
 public class SystemModels
 {
     public static bool OpenCustomMode()
     {
-       return WMIMethodServices.SetValue(WMIMethodName.CPUPower, WMICPUPower.OpenState);
+       return MethodServices.SetValue(MethodName.CPUPower, CPUPower.OpenState);
     }
-    public static WMISystemACType GetACType()
+    public static SystemACType GetACType()
     {
-      return WMIMethodServices.GetValue<WMISystemACType>(WMIMethodName.SystemAcType);
+      return MethodServices.GetValue<SystemACType>(MethodName.SystemAcType);
     }
     public static string GetInfo()
     {

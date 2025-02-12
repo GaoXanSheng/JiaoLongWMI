@@ -1,6 +1,6 @@
-﻿namespace JiaoLong16Pro.BLD.WMIOperation
+﻿namespace JiaoLongWMI.WMIOperation
 {
-    public enum WMICPUPower : byte
+    public enum CPUPower : byte
     {
         CloseState = 0,
         OpenState,

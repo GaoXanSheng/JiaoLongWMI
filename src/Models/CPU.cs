@@ -1,0 +1,46 @@
+﻿
+
+using JiaoLongWMI.WMIOperation;
+using JiaoLongWMI.WMIOperation.Method;
+
+namespace JiaoLongWMI.Models;
+
+public class CPU
+{
+    /**
+     * 低负载电压
+     */
+    public static bool SetCpuShortPower(byte LongPower)
+    {
+        return MethodServices.SetValue(MethodName.CPUPower, new byte[2]
+        {
+            (byte)CPUPower.SPLState,
+            LongPower
+        });
+
+    }
+
+    /**
+     * 全核心满载电压
+     */
+    public static bool SetCpuLongPower(byte ShortPower)
+    {
+        return MethodServices.SetValue(MethodName.CPUPower, new byte[2]
+        {
+            (byte)CPUPower.SPPTState,
+            ShortPower
+        });
+    }
+    /**
+     * CPU温控
+     */
+    public static bool SetCPUTempWall(byte tempwall)
+    {
+
+        return MethodServices.SetValue(MethodName.CPUPower, new byte[2]
+        {
+            (byte)CPUPower.CPUTempWallState,
+            tempwall
+        });
+    }
+}

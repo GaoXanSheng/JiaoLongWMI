@@ -1,6 +1,6 @@
-﻿namespace JiaoLong16Pro.BLD.WMIOperation
+﻿namespace JiaoLongWMI.WMIOperation.System
 {
-    public enum WMISystemPerMode : byte
+    public enum SystemPerMode : byte
     {
         BalanceMode,
         PerformanceMode,

@@ -53,7 +53,7 @@ public class Keyboard
         {
             if (b > 0 && b <= 4)
             {
-                return MethodServices.SetValue(MethodName.RGBKeyboardBrightness, 4);
+                return MethodServices.SetValue(MethodName.RGBKeyboardBrightness, b);
             }
             return false;
         }

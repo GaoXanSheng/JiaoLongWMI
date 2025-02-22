@@ -1,4 +1,4 @@
-﻿
+﻿using System.Text.Json.Nodes;
 using JiaoLongWMI.WMIOperation.Keyboard;
 using JiaoLongWMI.WMIOperation.Method;
 
@@ -6,52 +6,56 @@ namespace JiaoLongWMI.Models;
 
 public class Keyboard
 {
-    /**
-     * return float[] R G B
-     */
-    public static string GetRGBKeyboardColor()
+    public class Color
     {
-        Tuple<int, int, int> tuple = MethodServices.GetValue<Tuple<int, int, int>>(MethodName.RGBKeyboardColor);
-        return $"{tuple.Item1}-{tuple.Item2}-{tuple.Item3}";
-    }
-
-    public static RGBKeyboardBrightnessLevel GetkeyboardLightBrightness()
-    {
-        return MethodServices.GetValue<RGBKeyboardBrightnessLevel>(MethodName.RGBKeyboardBrightness);
-    }
-
-    public static RGBKeyboardMode GetKeyboardMode()
-    {
-        return MethodServices.GetValue<RGBKeyboardMode>(MethodName.RGBKeyboardMode);
-    }
-
-    public static bool SetKeyboardMode()
-    {
-      return MethodServices.SetValue(MethodName.RGBKeyboardMode, RGBKeyboardMode.Mode_RGBFixedMode);
-    }
-    public static bool SetRGBKeyboardColor(byte red, byte green, byte blue)
-    {
-        return MethodServices.SetValue(MethodName.RGBKeyboardColor, new byte[3]
+        public static JsonObject Get()
         {
-            red,
-            green,
-            blue
-        });
-    }
-
-    public static bool SetkeyboardLightBrightness(byte b)
-    {
-        if (b > 4)
-        {
-            return MethodServices.SetValue(MethodName.RGBKeyboardBrightness, 4);
+            var json = new JsonObject();
+            Tuple<int, int, int> tuple = MethodServices.GetValue<Tuple<int, int, int>>(MethodName.RGBKeyboardColor);
+            json["red"] = tuple.Item1;
+            json["green"] = tuple.Item2;
+            json["blue"] = tuple.Item3;
+            return json;
         }
-        else if (b < 1)
+
+        public static bool Set(byte red, byte green, byte blue)
         {
-            return MethodServices.SetValue(MethodName.RGBKeyboardBrightness, 0);
+            return MethodServices.SetValue(MethodName.RGBKeyboardColor, new byte[3]
+            {
+                red,
+                green,
+                blue
+            });
         }
-        else
+    }
+
+    public class Mode
+    {
+        public static bool Set()
         {
-            return MethodServices.SetValue(MethodName.RGBKeyboardBrightness, b);
+            return MethodServices.SetValue(MethodName.RGBKeyboardMode, RGBKeyboardMode.Mode_RGBFixedMode);
+        }
+
+        public static RGBKeyboardMode Get()
+        {
+            return MethodServices.GetValue<RGBKeyboardMode>(MethodName.RGBKeyboardMode);
+        }
+    }
+
+    public class LightBrightness
+    {
+        public static RGBKeyboardBrightnessLevel Get()
+        {
+            return MethodServices.GetValue<RGBKeyboardBrightnessLevel>(MethodName.RGBKeyboardBrightness);
+        }
+
+        public static bool Set(byte b)
+        {
+            if (b > 0 && b <= 4)
+            {
+                return MethodServices.SetValue(MethodName.RGBKeyboardBrightness, 4);
+            }
+            return false;
         }
     }
 }

@@ -3,13 +3,25 @@ POST http://localhost:9871/
 Content-Type: application/json
 
 {
-  "CMD":"LogoLight-SetLogoLight-0"
+  "type": "LogoLight",
+  "method": "Set",
+  "args":["OFF"]
 }
 ### LOGO灯开
 POST http://localhost:9871/
 Content-Type: application/json
 
 {
-  "CMD":"LogoLight-SetLogoLight-1"
+  "type": "LogoLight",
+  "method": "Set",
+  "args":["ON"]
 }
+### 系统信息
+POST http://localhost:9871/
+Content-Type: application/json
 
+{
+  "type": "SystemInfo",
+  "method": "GetSystemInfo",
+  "args":[]
+}

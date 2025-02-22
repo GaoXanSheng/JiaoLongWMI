@@ -15,12 +15,12 @@ public class SocketServer
         string host = args[1];
         // 设置要监听的URL
         string url = "http://" + host + ":" + port + "/";
+        Logger.Info(url);
         HttpListener listener = new HttpListener();
         listener.Prefixes.Add(url);
         try
         {
             listener.Start();
-            Console.WriteLine(url);
 
             // 接受请求并处理
             while (true)
@@ -36,7 +36,7 @@ public class SocketServer
                         body = reader.ReadToEnd();
                     }
 
-                    Console.WriteLine(body);
+                    Logger.Info(body);
 
                     // 返回响应
                     HttpListenerResponse response = context.Response;
@@ -69,7 +69,7 @@ public class SocketServer
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            Logger.Info(ex.Message);
         }
         finally
         {
@@ -85,22 +85,9 @@ public class SocketServer
         JObject json = JObject.Parse(msg);
 
         // 提取 "message" 字段
-        string message = json["CMD"].ToString();
-        string[] programArgs = message.Split("-");
-        string programTitle = programArgs[0];
-        string[] function = new string[99];
-        for (int i = 1; i < programArgs.Length; i++)
-        {
-            function.SetValue(programArgs[i], i - 1);
-        }
-
-        if (programTitle != "Socket")
-        {
-            return _socketProgramEnumerationType.EumType(programTitle, function);
-        }
-        else
-        {
-            throw new Exception("Server is Run");
-        }
+        string typeName = json["type"].ToString();
+        string methodName = json["method"].ToString();
+        string[] args = json["args"].Select(arg => arg.ToString()).ToArray();
+        return _socketProgramEnumerationType.EumType(typeName, methodName,args);
     }
 }

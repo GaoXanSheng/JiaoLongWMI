@@ -1,4 +1,5 @@
-﻿using JiaoLongWMI.server;
+﻿using System.Text;
+using JiaoLongWMI.server;
 using JiaoLongWMI.tools;
 
 namespace JiaoLongWMI
@@ -11,23 +12,23 @@ namespace JiaoLongWMI
         [STAThread]
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             if (args.Length != 0)
             {
-                string[] programArgs = args[0].Split("-");
-                string programTitle = programArgs[0];
-                string[] function = new string[99];
-                for (int i = 1; i < programArgs.Length; i++)
+                string typeName = args[0];
+                string methodName = args[1];
+                List<string> parameter = new List<string>();
+                for (int i = 2; i < args.Length; i++)
                 {
-                    function.SetValue(programArgs[i], i - 1);
+                    parameter.Add(args[i]);
                 }
-
-                if (programTitle=="Socket")
-                {
-                    SocketServer socket = new SocketServer(function);
+                if (typeName == "SocketServer")
+                { 
+                     new SocketServer(parameter.ToArray());
                 }
                 else
                 {
-                    Console.WriteLine(new CliProgramEnumerationType().EumType(programTitle, function));
+                    Logger.Info(new CliProgramEnumerationType().EumType(typeName, methodName, parameter.ToArray()));
                 }
             }
         }

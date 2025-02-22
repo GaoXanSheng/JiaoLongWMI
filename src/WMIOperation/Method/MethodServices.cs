@@ -1,14 +1,10 @@
 ﻿using System.Management;
+using JiaoLongWMI.tools;
 
 namespace JiaoLongWMI.WMIOperation.Method
 {
    public static class MethodServices
   {
-    private static void PrintByteArray(byte[] data)
-    {
-      for (int index = 0; index < 8; ++index)
-        Console.WriteLine("{0:X}", data[index]);
-    }
 
     private static byte[] _MakeMethodPrams(MethodType wMIMethodType, MethodName wMIMethodName)
     {
@@ -29,7 +25,6 @@ namespace JiaoLongWMI.WMIOperation.Method
           return (T)(object) new Tuple<int, int>(-1, -1);
         return typeof (T) == typeof (Tuple<int, int, int>) ? (T)(object) new Tuple<int, int, int>(-1, -1, -1) : (T)(object) byte.MaxValue;
       }
-      MethodServices.PrintByteArray(tuple.Item2);
       if (typeof (T) == typeof (Tuple<int, int>))
         return (T)(object) new Tuple<int, int>((tuple.Item2[5] << 8) +tuple.Item2[4], (tuple.Item2[7] << 8) + tuple.Item2[6]);
       if (!(typeof (T) == typeof (Tuple<int, int, int>)))
@@ -47,8 +42,6 @@ namespace JiaoLongWMI.WMIOperation.Method
       bool flag = true;
       byte[] numArray = _MakeMethodPrams(MethodType.Set, wMIMethodName);
       numArray[4] = (byte) setvalue;
-      Console.WriteLine("SetMethod inparms:");
-      PrintByteArray(numArray);
       if (!ExcMethod(numArray).Item1)
         flag = false;
       return flag;
@@ -60,8 +53,6 @@ namespace JiaoLongWMI.WMIOperation.Method
       byte[] numArray = MethodServices._MakeMethodPrams(MethodType.Set, wMIMethodName);
       for (int index = 0; index < setvalue.Length; ++index)
         numArray[4 + index] = setvalue[index];
-      Console.WriteLine("SetMethod inparms:");
-      MethodServices.PrintByteArray(numArray);
       if (!MethodServices.ExcMethod(numArray).Item1)
         flag = false;
       return flag;
@@ -71,7 +62,6 @@ namespace JiaoLongWMI.WMIOperation.Method
     {
       if (inData.Length != 32)
         return new Tuple<bool, byte[]>(false,null);
-      PrintByteArray(inData);
       try
       {
         ManagementObject managementObject = new ManagementObject("root\\WMI", "MICommonInterface.InstanceName='ACPI\\PNP0C14\\MIFS_0'", null);
@@ -81,7 +71,7 @@ namespace JiaoLongWMI.WMIOperation.Method
       }
       catch (ManagementException ex)
       {
-        Console.WriteLine("An error occurred while trying to execute the WMI method: " + ex.Message);
+        Logger.Info(ex.Message);
         return new Tuple<bool, byte[]>(false,null);
       }
     }

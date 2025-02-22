@@ -1,109 +1,188 @@
-﻿using JiaoLong16Pro.Models;
+﻿using System.Reflection;
+using System.Text.Json.Nodes;
 using JiaoLongWMI.Models;
+using JiaoLongWMI.server;
+using JiaoLongWMI.WMIOperation;
+using JiaoLongWMI.WMIOperation.System;
+using GPUMode = JiaoLong16Pro.Models.GPUMode;
 
 namespace JiaoLongWMI.tools;
 
 public class CliProgramEnumerationType
 {
-    public string EumType(string type, string[] args)
+    private JsonObject callBack = new JsonObject();
+
+    private void CLI_Cpu(string methodName, string[] args)
     {
-        switch (type)
+        if (methodName == "SetCpuShortPower")
         {
-            case "CPU": return CpuType(args);
-            case "Fan": return FanType(args);
-            case "GPU": return GpuType(args);
-            case "Keyboard": return KeyboardType(args);
-            case "LogoLight": return LogoLightType(args);
-            case "PerformaceMode": return PerformaceModeType(args);
-            case "System": return SystemType(args);
-            default: return "false";
+            callBack["result"] = CPU.SetCpuShortPower(Convert.ToByte(args[0])).ToString();
+        }
+
+        if (methodName == "SetCpuLongPower")
+        {
+            callBack["result"] = CPU.SetCpuLongPower(Convert.ToByte(args[0])).ToString();
+        }
+
+        if (methodName == "OpenCustomMode")
+        {
+            callBack["result"] = CPU.OpenCustomMode(Convert.ToBoolean(args[0])).ToString();
+        }
+
+        if (methodName == "SetCPUTempWall")
+        {
+            callBack["result"] = CPU.SetCPUTempWall(Convert.ToByte(args[0])).ToString();
         }
     }
 
-    private string CpuType(string[] args)
+    private void CLI_SystemModels(string methodName, string[] args)
     {
-        switch (args[0])
+        if (methodName == "GetInfo")
         {
-            case "SetCpuShortPower": return CPU.SetCpuShortPower(byte.Parse(args[1])).ToString();
-            case "SetCpuLongPower": return CPU.SetCpuLongPower(byte.Parse(args[1])).ToString();
-            case "SetCPUTempWall": return CPU.SetCPUTempWall(byte.Parse(args[1])).ToString();
-            default: return "false";
+            callBack["result"] = SystemModels.GetInfo();
         }
     }
 
-    private string FanType(string[] args)
+    private void CLI_Keyboard(string methodName, string[] args)
     {
-        switch (args[0])
+        if (methodName == "ColorSet")
         {
-            case "SwitchMaxFanSpeed": return Fan.CLISetSwitchMaxFanSpeed(byte.Parse(args[1])).ToString();
-            case "GetFanSpeed": return Fan.GetFanSpeed().ToString();
-            case "SetFanSpeed": return Fan.SetFanSpeed(byte.Parse(args[1])).ToString();
-            case "GetSwitchMaxFanSpeed": return Fan.GetSwitchMaxFanSpeed().ToString();
-            default: return "false";
+            byte RedParseResult;
+            byte GreenParseResult;
+            byte BlueParseResult;
+            if (byte.TryParse(args[0], out RedParseResult) && byte.TryParse(args[1], out GreenParseResult) &&
+                byte.TryParse(args[2], out BlueParseResult))
+            {
+                callBack["result"] = Keyboard.Color.Set(RedParseResult, GreenParseResult, BlueParseResult);
+            }
+        }
+
+        if (methodName == "ColorGet")
+        {
+            callBack["result"] = Keyboard.Color.Get();
+        }
+
+        if (methodName == "ModeSet")
+        {
+            callBack["result"] = Keyboard.Mode.Set();
+        }
+
+        if (methodName == "ModeGet")
+        {
+            callBack["result"] = Keyboard.Mode.Get().ToString();
+        }
+
+        if (methodName == "LightBrightnessGet")
+        {
+            callBack["result"] = Keyboard.LightBrightness.Get().ToString();
+        }
+
+        if (methodName == "LightBrightnessSet")
+        {
+            byte LightBrightness;
+            bool success = byte.TryParse(args[0], out LightBrightness);
+            if (success)
+            {
+                callBack["result"] = Keyboard.LightBrightness.Set(LightBrightness);
+            }
         }
     }
 
-    private string GpuType(string[] args)
+    private void CLI_LogoLight(string methodName, string[] args)
     {
-        switch (args[0])
+        if (methodName == "Set")
         {
-            case "SetGpuMode": return GPU.CLISetGpuMode(byte.Parse(args[1])).ToString();
-            case "GetGpuMode": return GPU.GetGpuMode().ToString();
-            default: return "false";
+            ResultState boolValue;
+            bool success = Enum.TryParse(args[0], out boolValue);
+            if (success)
+            {
+                callBack["result"] = LogoLight.Set(boolValue);
+            }
+        }
+
+        if (methodName == "Get")
+        {
+            callBack["result"] = LogoLight.Get().ToString();
         }
     }
 
-    private string KeyboardType(string[] args)
+    private void CLI_GPUMode(string methodName, string[] args)
     {
-        switch (args[0])
+        if (methodName == "Set")
         {
-            case "GetRGBKeyboardColor":
-                return Keyboard.GetRGBKeyboardColor();
-            case "GetkeyboardLightBrightness":
-                return Keyboard.GetkeyboardLightBrightness().ToString();
-            case "GetKeyboardMode":
-                return Keyboard.GetKeyboardMode().ToString();
-            case "SetKeyboardMode":
-                return Keyboard.SetKeyboardMode().ToString();
-            case "SetRGBKeyboardColor":
-                return Keyboard.SetRGBKeyboardColor(byte.Parse(args[1]), byte.Parse(args[2]), byte.Parse(args[3]))
-                    .ToString();
-            case "SetkeyboardLightBrightness":
-                return Keyboard.SetkeyboardLightBrightness(byte.Parse(args[1])).ToString();
-            default: return "false";
+            JiaoLongWMI.WMIOperation.GPUMode GPUModeEnum;
+            bool success = Enum.TryParse(args[0], out GPUModeEnum);
+            if (success)
+            {
+                callBack["result"] = GPUMode.Set(GPUModeEnum).ToString();
+            }
+        }
+
+        if (methodName == "Get")
+        {
+            callBack["result"] = GPUMode.Get().ToString();
         }
     }
 
-    private string LogoLightType(string[] args)
+    private void CLI_PerformaceMode(string methodName, string[] args)
     {
-        switch (args[0])
+        if (methodName == "Set")
         {
-            case "SetLogoLight":
-                return LogoLight.CLISetLogoLight(byte.Parse(args[1])).ToString();
-            case "GetLogoLight":
-                return LogoLight.GetLogoLight().ToString();
-            default: return "false";
+            bool success = Enum.TryParse(args[0], out SystemPerMode PerformaceModeEnum);
+            if (success)
+            {
+                callBack["result"] = PerformaceMode.Set(PerformaceModeEnum);
+            }
+        }
+
+        if (methodName == "Get")
+        {
+            callBack["result"] = PerformaceMode.Get().ToString();
         }
     }
 
-    private string PerformaceModeType(string[] args)
+    public string EumType(string typeName, string methodName, string[] args)
     {
-        switch (args[0])
+        callBack["typeName"] = typeName;
+        callBack["methodName"] = methodName;
+        callBack["result"] = false;
+        if (typeName == "CPU")
         {
-            case "SetPerformaceMode": return PerformaceMode.CLISetPerformaceMode(byte.Parse(args[1])).ToString();
-            case "GetPerformaceMode": return PerformaceMode.GetPerformaceMode().ToString();
-            default: return "false";
+            CLI_Cpu(methodName, args);
         }
-    }
 
-    private string SystemType(string[] args)
-    {
-        switch (args[0])
+        if (typeName == "SystemModels")
         {
-            case "OpenCustomMode": return (SystemModels.OpenCustomMode()).ToString();
-            case "GetACType": return (SystemModels.GetACType()).ToString();
-            case "GetInfo": return (SystemModels.GetInfo());
-            default: return "false";
+            CLI_SystemModels(methodName, args);
         }
+
+        if (typeName == "Fan")
+        {
+            if (methodName == "GetFanSpeed")
+            {
+                callBack["result"] = Fan.GetFanSpeed();
+            }
+        }
+
+        if (typeName == "GPUMode")
+        {
+            CLI_GPUMode(methodName, args);
+        }
+
+        if (typeName == "LogoLight")
+        {
+            CLI_LogoLight(methodName, args);
+        }
+
+        if (typeName == "Keyboard")
+        {
+            CLI_Keyboard(methodName, args);
+        }
+
+        if (typeName=="PerformaceMode")
+        {
+            CLI_PerformaceMode(methodName, args);
+        }
+        return callBack.ToJsonString();
     }
 }

@@ -1,6 +1,6 @@
 ﻿
 using System.Runtime.InteropServices;
-using JiaoLongWMI.WMIOperation;
+using System.Text.Json.Nodes;
 using JiaoLongWMI.WMIOperation.Method;
 using JiaoLongWMI.WMIOperation.System;
 
@@ -8,21 +8,25 @@ namespace JiaoLongWMI.Models;
 
 public class SystemModels
 {
-    public static bool OpenCustomMode()
-    {
-       return MethodServices.SetValue(MethodName.CPUPower, CPUPower.OpenState);
-    }
+
     public static SystemACType GetACType()
     {
       return MethodServices.GetValue<SystemACType>(MethodName.SystemAcType);
     }
-    public static string GetInfo()
+    public static JsonObject GetInfo()
     {
         double usage;
         int gputemp, speed, cputemp;
         double gpufreq, rate;
         SystemUsage.GetNvidiaGpuUsage(out usage, out gputemp, out gpufreq, out rate, out speed, out cputemp);
-        return $"{usage}-{gputemp}-{gpufreq}-{rate}-{speed}-{cputemp}"; 
+        JsonObject json = new JsonObject();
+        json["usage"] = usage;
+        json["gputemp"] = gputemp;
+        json["gpufreq"] = gpufreq;
+        json["rate"] = rate;
+        json["speed"] = speed;
+        json["cputemp"] = cputemp;
+        return json;
         // Console.WriteLine($"GPU Usage: {usage}%, GPU Temp: {gputemp}°C, GPU Freq: {gpufreq} MHz, Rate: {rate}, Speed: {speed}, CPU Temp: {cputemp}°C");
     }
 

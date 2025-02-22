@@ -1,6 +1,4 @@
-﻿
-
-using JiaoLongWMI.WMIOperation;
+﻿using JiaoLongWMI.WMIOperation;
 using JiaoLongWMI.WMIOperation.Method;
 
 namespace JiaoLongWMI.Models;
@@ -17,8 +15,19 @@ public class CPU
             (byte)CPUPower.SPLState,
             LongPower
         });
-
     }
+
+    /**
+     * 自定义模式
+     */
+    public static bool OpenCustomMode(Boolean Open)
+    {
+        if (Open) {
+            return MethodServices.SetValue(MethodName.CPUPower, CPUPower.OpenState);
+        }
+        return MethodServices.SetValue(MethodName.CPUPower, CPUPower.CloseState);
+    }
+
 
     /**
      * 全核心满载电压
@@ -31,12 +40,12 @@ public class CPU
             ShortPower
         });
     }
+
     /**
      * CPU温控
      */
     public static bool SetCPUTempWall(byte tempwall)
     {
-
         return MethodServices.SetValue(MethodName.CPUPower, new byte[2]
         {
             (byte)CPUPower.CPUTempWallState,

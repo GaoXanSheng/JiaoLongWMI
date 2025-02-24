@@ -59,14 +59,14 @@ class RGBBreathingLightEffect
             for (byte brightness = minBrightness; brightness < maxBrightness; brightness++)
             {
                  LightBrightnessSet(brightness);
-                 Task.Delay(delay); // Wait for the specified delay
+                 Thread.Sleep(delay); // Wait for the specified delay
             }
 
             // Decrease brightness
             for (byte brightness = maxBrightness; brightness > minBrightness; brightness--)
             {
                  LightBrightnessSet(brightness);
-                 Task.Delay(delay); // Wait for the specified delay
+                 Thread.Sleep(delay); // Wait for the specified delay
             }
         }
     }
@@ -104,7 +104,7 @@ class RGBBreathingLightEffect
                     float percent = (float)j / steps;
                     var color = GetGradientColor(startColor, endColor, percent);
                     RGB_Set(color.R, color.G, color.B);
-                    Task.Delay(delay); // Wait for the specified delay
+                    Thread.Sleep(delay); // Wait for the specified delay
                 }
             }
         }

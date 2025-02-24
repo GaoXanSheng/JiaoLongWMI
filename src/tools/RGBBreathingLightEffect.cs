@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 class RGBBreathingLightEffect
 {
     // Create threads to run the effects synchronously
-    private Thread breathingEffectThread;
+    // private Thread breathingEffectThread;
     private Thread gradientEffectThread ;
     // Usage example:
     public RGBBreathingLightEffect()
     {
-        breathingEffectThread = new Thread(ApplyBreathingLightEffect);
+        // breathingEffectThread = new Thread(ApplyBreathingLightEffect);
         gradientEffectThread = new Thread(ApplyLoopingGradientColor);
     }
 
     public void Start()
     {
         // Start the threads
-        breathingEffectThread.Start();
+        // breathingEffectThread.Start();
         gradientEffectThread.Start();
     }
     // Stop the threads

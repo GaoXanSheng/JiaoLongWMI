@@ -71,6 +71,7 @@ namespace JiaoLongWMI.WMIOperation.Method
       }
       catch (ManagementException ex)
       {
+        CliProgramEnumerationType.ErrMag = ex.Message;
         Logger.Info(ex.Message);
         return new Tuple<bool, byte[]>(false,null);
       }

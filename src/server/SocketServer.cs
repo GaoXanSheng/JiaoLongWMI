@@ -1,7 +1,8 @@
 ﻿using System.Net;
 using System.Text;
+using System.Text.Json.Nodes;
 using JiaoLongWMI.tools;
-using Newtonsoft.Json.Linq;
+using Namotion.Reflection;
 
 namespace JiaoLongWMI.server;
 
@@ -82,12 +83,11 @@ public class SocketServer
     {
         // msg是个json 提取msg
         // 解析 JSON 字符串
-        JObject json = JObject.Parse(msg);
-
+        JsonObject json = JsonObject.Parse(msg).AsObject();
         // 提取 "message" 字段
-        string typeName = json["type"].ToString();
-        string methodName = json["method"].ToString();
-        string[] args = json["args"].Select(arg => arg.ToString()).ToArray();
-        return _socketProgramEnumerationType.EumType(typeName, methodName,args);
+        json.TryGetPropertyValue("type", out JsonNode typeName);
+        json.TryGetPropertyValue("method", out JsonNode methodName);
+        json.TryGetPropertyValue("args", out JsonNode args);
+        return _socketProgramEnumerationType.EumType(typeName.ToString(), methodName.ToString(),args.AsArray().Select(item => item.ToString()).ToArray());
     }
 }

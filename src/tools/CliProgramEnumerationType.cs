@@ -1,7 +1,5 @@
-﻿using System.Reflection;
-using System.Text.Json.Nodes;
+﻿using System.Text.Json.Nodes;
 using JiaoLongWMI.Models;
-using JiaoLongWMI.server;
 using JiaoLongWMI.WMIOperation;
 using JiaoLongWMI.WMIOperation.System;
 using GPUMode = JiaoLong16Pro.Models.GPUMode;
@@ -11,6 +9,7 @@ namespace JiaoLongWMI.tools;
 public class CliProgramEnumerationType
 {
     private JsonObject callBack = new JsonObject();
+    public static string ErrMag = null;
 
     private void CLI_Cpu(string methodName, string[] args)
     {
@@ -32,14 +31,6 @@ public class CliProgramEnumerationType
         if (methodName == "SetCPUTempWall")
         {
             callBack["result"] = CPU.SetCPUTempWall(Convert.ToByte(args[0])).ToString();
-        }
-    }
-
-    private void CLI_SystemModels(string methodName, string[] args)
-    {
-        if (methodName == "GetInfo")
-        {
-            callBack["result"] = SystemModels.GetInfo();
         }
     }
 
@@ -151,11 +142,6 @@ public class CliProgramEnumerationType
             CLI_Cpu(methodName, args);
         }
 
-        if (typeName == "SystemModels")
-        {
-            CLI_SystemModels(methodName, args);
-        }
-
         if (typeName == "Fan")
         {
             if (methodName == "GetFanSpeed")
@@ -179,10 +165,18 @@ public class CliProgramEnumerationType
             CLI_Keyboard(methodName, args);
         }
 
-        if (typeName=="PerformaceMode")
+        if (typeName == "PerformaceMode")
         {
             CLI_PerformaceMode(methodName, args);
         }
+
+        if (ErrMag != null)
+        {
+            callBack["msg"] = ErrMag;
+            ErrMag = null;
+        }
+
         return callBack.ToJsonString();
     }
+    
 }

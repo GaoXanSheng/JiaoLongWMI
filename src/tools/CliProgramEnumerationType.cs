@@ -10,7 +10,7 @@ public class CliProgramEnumerationType
 {
     private JsonObject callBack = new JsonObject();
     public static string ErrMag = null;
-
+    private RGBBreathingLightEffect RgbBreathingLightEffect = new RGBBreathingLightEffect();
     private void CLI_Cpu(string methodName, string[] args)
     {
         if (methodName == "SetCpuShortPower")
@@ -34,6 +34,18 @@ public class CliProgramEnumerationType
         }
     }
 
+    private void CLI_RGBBreathingLightEffect(string methodName, string[] args)
+    {
+        if (methodName == "Start")
+        {
+            RgbBreathingLightEffect.Start();
+        }
+
+        if (methodName == "Stop")
+        {
+            RgbBreathingLightEffect.Stop();
+        }
+    }
     private void CLI_Keyboard(string methodName, string[] args)
     {
         if (methodName == "ColorSet")
@@ -170,6 +182,10 @@ public class CliProgramEnumerationType
             CLI_PerformaceMode(methodName, args);
         }
 
+        if (typeName=="RGBBreathingLightEffect")
+        {
+            CLI_RGBBreathingLightEffect(methodName, args);
+        }
         if (ErrMag != null)
         {
             callBack["msg"] = ErrMag;

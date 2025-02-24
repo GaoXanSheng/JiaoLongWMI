@@ -5,12 +5,12 @@ namespace JiaoLongWMI.Models;
 
 public class Fan
 {
-    [Obsolete("This method is obsolete. Please use EC_Controller instead.")]
+    [Obsolete("This method is obsolete.")]
     public static bool SetFanSpeed(byte speed)
     {
         return MethodServices.SetValue(MethodName.MaxFanSpeed, speed);
     }
-
+    [Obsolete("This method is obsolete.")]
     public static JsonObject GetFanSpeed()
     {
         var res = new JsonObject();

@@ -79,16 +79,14 @@ class RGBBreathingLightEffect
         byte b = (byte)(startColor.B + (endColor.B - startColor.B) * percent);
         return Color.FromArgb(r, g, b);
     }
-
+    private Color[] colors = new[] {
+        Color.Red, // Red
+        Color.Green, // Green
+        Color.Blue  // Blue
+    };
     // Apply Looping Gradient Color
     private void ApplyLoopingGradientColor()
     {
-        var colors = new[] {
-            Color.Red, // Red
-            Color.Green, // Green
-            Color.Blue  // Blue
-        };
-
         const int steps = 100;
         const int delay = 50; // Milliseconds
 

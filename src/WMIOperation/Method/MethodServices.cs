@@ -18,7 +18,7 @@ namespace JiaoLongWMI.WMIOperation.Method
 
     public static T GetValue<T>(MethodName wMIMethodName)
     {
-      Tuple<bool, byte[]> tuple = MethodServices.ExcMethod(MethodServices._MakeMethodPrams(MethodType.Get, wMIMethodName));
+      Tuple<bool, byte[]> tuple = ExcMethod(_MakeMethodPrams(MethodType.Get, wMIMethodName));
       if (!tuple.Item1)
       {
         if (typeof (T) == typeof (Tuple<int, int>))
@@ -50,10 +50,10 @@ namespace JiaoLongWMI.WMIOperation.Method
     public static bool SetValue(MethodName wMIMethodName, byte[] setvalue)
     {
       bool flag = true;
-      byte[] numArray = MethodServices._MakeMethodPrams(MethodType.Set, wMIMethodName);
+      byte[] numArray = _MakeMethodPrams(MethodType.Set, wMIMethodName);
       for (int index = 0; index < setvalue.Length; ++index)
         numArray[4 + index] = setvalue[index];
-      if (!MethodServices.ExcMethod(numArray).Item1)
+      if (!ExcMethod(numArray).Item1)
         flag = false;
       return flag;
     }
@@ -67,12 +67,13 @@ namespace JiaoLongWMI.WMIOperation.Method
         ManagementObject managementObject = new ManagementObject("root\\WMI", "MICommonInterface.InstanceName='ACPI\\PNP0C14\\MIFS_0'", null);
         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("MiInterface");
         methodParameters["InData"] = inData;
-        return new Tuple<bool, byte[]>(true, managementObject.InvokeMethod("MiInterface", methodParameters, null)["OutData"] as byte[]);
+        var res =  new Tuple<bool, byte[]>(true, managementObject.InvokeMethod("MiInterface", methodParameters, null)["OutData"] as byte[]);
+        GC.Collect();
+        return res;
       }
       catch (ManagementException ex)
       {
         CliProgramEnumerationType.ErrMag = ex.Message;
-        Logger.Info(ex.Message);
         return new Tuple<bool, byte[]>(false,null);
       }
     }

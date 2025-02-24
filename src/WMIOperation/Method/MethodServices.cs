@@ -68,7 +68,6 @@ namespace JiaoLongWMI.WMIOperation.Method
         ManagementBaseObject methodParameters = managementObject.GetMethodParameters("MiInterface");
         methodParameters["InData"] = inData;
         var res =  new Tuple<bool, byte[]>(true, managementObject.InvokeMethod("MiInterface", methodParameters, null)["OutData"] as byte[]);
-        GC.Collect();
         return res;
       }
       catch (ManagementException ex)

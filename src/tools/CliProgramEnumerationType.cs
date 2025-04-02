@@ -160,6 +160,14 @@ public class CliProgramEnumerationType
             {
                 callBack["result"] = Fan.GetFanSpeed();
             }
+            if (methodName == "SetFanSpeed")
+            {
+                callBack["result"] = Fan.SetFanSpeed(byte.Parse(args[0]));
+            }
+            if (methodName == "SetMaxFanSpeedSwitch")
+            {
+                callBack["result"] = Fan.SetMaxFanSpeedSwitch(byte.Parse(args[0]));
+            }
         }
 
         if (typeName == "GPUMode")

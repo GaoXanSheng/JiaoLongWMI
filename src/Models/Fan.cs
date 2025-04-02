@@ -11,6 +11,18 @@ public class Fan
         return MethodServices.SetValue(MethodName.MaxFanSpeed, speed);
     }
     [Obsolete("This method is obsolete.")]
+    public static bool SetMaxFanSpeedSwitch(bool speed)
+    {
+        if (speed)
+        {
+            return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, 1);
+        }
+        else
+        {
+            return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, 0);
+        }
+    }
+    [Obsolete("This method is obsolete.")]
     public static JsonObject GetFanSpeed()
     {
         var res = new JsonObject();

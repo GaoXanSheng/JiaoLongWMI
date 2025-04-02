@@ -3,7 +3,6 @@
 namespace JiaoLongWMI.tools;
 
 using System.Drawing;
-using System.Threading.Tasks;
 
 class RGBBreathingLightEffect
 {

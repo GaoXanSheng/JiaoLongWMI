@@ -18,6 +18,7 @@ public class Fan
         ushort fan2SetRpmSet = 0xC83D;
         winRing0.ECRamWriteExt_Direct(fan1SetRpmSet, speed);
         winRing0.ECRamWriteExt_Direct(fan2SetRpmSet, speed);
+        winRing0.Dispose();
         return "Fan Speed Set OK";
     }
     

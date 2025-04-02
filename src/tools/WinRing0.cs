@@ -6,6 +6,11 @@ public class WinRing0
     static readonly ushort EC_DATA_PORT = 0x4F;
 
     private static Ols ols = new Ols();
+
+    public void Dispose()
+    {
+       ols.Dispose(); 
+    }
     // copy https://github.com/GermanAizek/WinRing0/blob/master/samples/Cs/WinRing0Sample.cs
     public string librarySutatus()
     {

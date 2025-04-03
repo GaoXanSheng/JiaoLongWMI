@@ -8,5 +8,5 @@ public enum ECMemoryTable : UInt16
     Fan2_RPM_Level = 0xC837,
     Fan1_RPM_SET = 0xC83C,
     Fan2_RPM_SET = 0xC83D,
-    EC_Version = 0xC410,
+    EC_Version = 0xC411,
 }

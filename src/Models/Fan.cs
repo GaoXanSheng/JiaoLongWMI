@@ -6,8 +6,12 @@ namespace JiaoLongWMI.Models;
 
 public class Fan
 {
-    public static string SetFanSpeed(byte speed)
+    public static string SetFanSpeed(string hexSpeed)
     {
+        if (!byte.TryParse(hexSpeed, System.Globalization.NumberStyles.HexNumber, null, out byte speed))
+        {
+            return "Invalid Hex Input";
+        }
         var winRing0 = new WinRing0();
         var librarySutatus = winRing0.librarySutatus();
         if (librarySutatus != "DLL Status OK")
@@ -21,17 +25,61 @@ public class Fan
         winRing0.Dispose();
         return "Fan Speed Set OK";
     }
-    
-    public static bool SetMaxFanSpeedSwitch(byte set)
+    public static JsonObject GetFanLevel()
     {
-        if (set == 1)
+        var res = new JsonObject();
+        var winRing0 = new WinRing0();
+        var librarySutatus = winRing0.librarySutatus();
+        if (librarySutatus != "DLL Status OK")
         {
-            return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, 1);
+            res["msg"] =  librarySutatus;
+            return res;
+        }
+        ushort fan1RpmLevel = 0xC836;
+        ushort fan2RpmLevel = 0xC837;
+        res["fan1RpmLevel"] =  winRing0.ECRamReadExt_Direct(fan1RpmLevel);
+        res["fan2RpmLevel"] =  winRing0.ECRamReadExt_Direct(fan2RpmLevel);
+        winRing0.Dispose();
+        res["msg"] =  "Fan Speed Set OK";
+        return res;
+    }
+    public static string SetFanLevel(string hexSpeed)
+    {
+        if (!byte.TryParse(hexSpeed, System.Globalization.NumberStyles.HexNumber, null, out byte level))
+        {
+            return "Invalid Hex Input";
+        }
+        if (level>10)
+        {
+            return "Fan Level Error";
+        }
+        var winRing0 = new WinRing0();
+        var librarySutatus = winRing0.librarySutatus();
+        if (librarySutatus != "DLL Status OK")
+        {
+            return librarySutatus;
+        }
+        ushort fan1RpmLevel = 0xC836;
+        ushort fan2RpmLevel = 0xC837;
+        winRing0.ECRamWriteExt_Direct(fan1RpmLevel, level);
+        winRing0.ECRamWriteExt_Direct(fan2RpmLevel, level);
+        winRing0.Dispose();
+        return "Fan Level Set OK";
+    }
+    public static bool SetMaxFanSpeedSwitch(string set)
+    {
+        if (set == "1")
+        {
+            return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, (byte)1);
         }
         else
         {
-            return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, 0);
+            return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, (byte)0);
         }
+    }
+    public static bool GetMaxFanSpeedSwitch()
+    {
+            return MethodServices.GetValue<bool>(MethodName.MaxFanSpeedSwitch);
     }
 
     [Obsolete("This method is obsolete.")]

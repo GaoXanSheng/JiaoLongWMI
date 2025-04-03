@@ -162,11 +162,19 @@ public class CliProgramEnumerationType
             }
             if (methodName == "SetFanSpeed")
             {
-                callBack["result"] = Fan.SetFanSpeed(byte.Parse(args[0]));
+                callBack["result"] = Fan.SetFanSpeed(args[0]);
+            }
+            if (methodName == "SetFanLevel")
+            {
+                callBack["result"] = Fan.SetFanLevel(args[0]);
             }
             if (methodName == "SetMaxFanSpeedSwitch")
             {
-                callBack["result"] = Fan.SetMaxFanSpeedSwitch(byte.Parse(args[0]));
+                callBack["result"] = Fan.SetMaxFanSpeedSwitch(args[0]);
+            }
+            if (methodName == "GetMaxFanSpeedSwitch")
+            {
+                callBack["result"] = Fan.GetMaxFanSpeedSwitch();
             }
         }
 

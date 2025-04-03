@@ -13,15 +13,14 @@ public class Fan
             return "Invalid Hex Input";
         }
         var winRing0 = new WinRing0();
-        var librarySutatus = winRing0.librarySutatus();
+        var librarySutatus = winRing0.LibrarySutatus();
         if (librarySutatus != "DLL Status OK")
         {
             return librarySutatus;
         }
-        ushort fan1SetRpmSet = 0xC83C;
-        ushort fan2SetRpmSet = 0xC83D;
-        winRing0.ECRamWriteExt_Direct(fan1SetRpmSet, speed);
-        winRing0.ECRamWriteExt_Direct(fan2SetRpmSet, speed);
+
+        winRing0.ECRamWriteExt_Direct((ushort)ECMemoryTable.Fan1_RPM_SET, speed);
+        winRing0.ECRamWriteExt_Direct((ushort)ECMemoryTable.Fan2_RPM_SET, speed);
         winRing0.Dispose();
         return "Fan Speed Set OK";
     }
@@ -29,16 +28,15 @@ public class Fan
     {
         var res = new JsonObject();
         var winRing0 = new WinRing0();
-        var librarySutatus = winRing0.librarySutatus();
+        var librarySutatus = winRing0.LibrarySutatus();
         if (librarySutatus != "DLL Status OK")
         {
             res["msg"] =  librarySutatus;
             return res;
         }
-        ushort fan1RpmLevel = 0xC836;
-        ushort fan2RpmLevel = 0xC837;
-        res["fan1RpmLevel"] =  winRing0.ECRamReadExt_Direct(fan1RpmLevel);
-        res["fan2RpmLevel"] =  winRing0.ECRamReadExt_Direct(fan2RpmLevel);
+
+        res["fan1RpmLevel"] =  winRing0.ECRamReadExt_Direct((ushort)ECMemoryTable.Fan1_RPM_Level);
+        res["fan2RpmLevel"] =  winRing0.ECRamReadExt_Direct((ushort)ECMemoryTable.Fan2_RPM_Level);
         winRing0.Dispose();
         res["msg"] =  "Fan Speed Set OK";
         return res;
@@ -54,15 +52,13 @@ public class Fan
             return "Fan Level Error";
         }
         var winRing0 = new WinRing0();
-        var librarySutatus = winRing0.librarySutatus();
+        var librarySutatus = winRing0.LibrarySutatus();
         if (librarySutatus != "DLL Status OK")
         {
             return librarySutatus;
         }
-        ushort fan1RpmLevel = 0xC836;
-        ushort fan2RpmLevel = 0xC837;
-        winRing0.ECRamWriteExt_Direct(fan1RpmLevel, level);
-        winRing0.ECRamWriteExt_Direct(fan2RpmLevel, level);
+        winRing0.ECRamWriteExt_Direct((ushort)ECMemoryTable.Fan1_RPM_Level, level);
+        winRing0.ECRamWriteExt_Direct((ushort)ECMemoryTable.Fan2_RPM_Level, level);
         winRing0.Dispose();
         return "Fan Level Set OK";
     }
@@ -81,8 +77,7 @@ public class Fan
     {
         return MethodServices.GetValue<byte>(MethodName.MaxFanSpeedSwitch);
     }
-
-    [Obsolete("This method is obsolete.")]
+    
     public static JsonObject GetFanSpeed()
     {
         var res = new JsonObject();

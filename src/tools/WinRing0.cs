@@ -2,20 +2,22 @@
 
 public class WinRing0
 {
-    static readonly ushort EC_ADDR_PORT = 0x4E;
-    static readonly ushort EC_DATA_PORT = 0x4F;
 
-    private static Ols ols = new Ols();
+    private Ols _ols;
 
+    public WinRing0()
+    {
+       _ols = new Ols(); 
+    }
     public void Dispose()
     {
-       ols.Dispose(); 
+        _ols.Dispose(); 
     }
     // copy https://github.com/GermanAizek/WinRing0/blob/master/samples/Cs/WinRing0Sample.cs
-    public string librarySutatus()
+    public string LibrarySutatus()
     {
         // Check support library sutatus
-        switch (ols.GetStatus())
+        switch (_ols.GetStatus())
         {
             case (uint)Ols.Status.NO_ERROR:
                 break;
@@ -28,7 +30,7 @@ public class WinRing0
         }
         
         // Check WinRing0 status
-        switch (ols.GetDllStatus())
+        switch (_ols.GetDllStatus())
         {
             case (uint)Ols.OlsDllStatus.OLS_DLL_NO_ERROR:
                 break;
@@ -48,51 +50,51 @@ public class WinRing0
 
         return ("DLL Status OK");
     }
-    public static void WriteIoPortByte(ushort port, byte value)
+    private void WriteIoPortByte(ushort port, byte value)
     {
-        ols.WriteIoPortByte(port, value);
+        _ols.WriteIoPortByte(port, value);
     }
 
-    public byte ReadIoPortByte(ushort port)
+    private byte ReadIoPortByte(ushort port)
     {
-        return ols.ReadIoPortByte(port);
+        return _ols.ReadIoPortByte(port);
     }
 
     public void ECRamWriteExt_Direct(ushort iIndex, byte data)
     {
-        WriteIoPortByte(EC_ADDR_PORT, 0x2E);
-        WriteIoPortByte(EC_DATA_PORT, 0x11);
-        WriteIoPortByte(EC_ADDR_PORT, 0x2F);
-        WriteIoPortByte(EC_DATA_PORT, (byte)(iIndex >> 8)); // 高字节
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2E);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x11);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2F);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, (byte)(iIndex >> 8)); // 高字节
 
-        WriteIoPortByte(EC_ADDR_PORT, 0x2E);
-        WriteIoPortByte(EC_DATA_PORT, 0x10);
-        WriteIoPortByte(EC_ADDR_PORT, 0x2F);
-        WriteIoPortByte(EC_DATA_PORT, (byte)(iIndex & 0xFF)); // 低字节
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2E);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, 0x10);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2F);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, (byte)(iIndex & 0xFF)); // 低字节
 
-        WriteIoPortByte(EC_ADDR_PORT, 0x2E);
-        WriteIoPortByte(EC_DATA_PORT, 0x12);
-        WriteIoPortByte(EC_ADDR_PORT, 0x2F);
-        WriteIoPortByte(EC_DATA_PORT, data);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2E);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, 0x12);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2F);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, data);
     }
 
     public byte ECRamReadExt_Direct(ushort iIndex)
     {
-        WriteIoPortByte(EC_ADDR_PORT, 0x2E);
-        WriteIoPortByte(EC_DATA_PORT, 0x11);
-        WriteIoPortByte(EC_ADDR_PORT, 0x2F);
-        WriteIoPortByte(EC_DATA_PORT, (byte)(iIndex >> 8)); // 高字节
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2E);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, 0x11);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2F);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, (byte)(iIndex >> 8)); // 高字节
 
-        WriteIoPortByte(EC_ADDR_PORT, 0x2E);
-        WriteIoPortByte(EC_DATA_PORT, 0x10);
-        WriteIoPortByte(EC_ADDR_PORT, 0x2F);
-        WriteIoPortByte(EC_DATA_PORT, (byte)(iIndex & 0xFF)); // 低字节
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2E);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, 0x10);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2F);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, (byte)(iIndex & 0xFF)); // 低字节
 
-        WriteIoPortByte(EC_ADDR_PORT, 0x2E);
-        WriteIoPortByte(EC_DATA_PORT, 0x12);
-        WriteIoPortByte(EC_ADDR_PORT, 0x2F);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2E);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT, 0x12);
+        WriteIoPortByte((ushort)ECMemoryTable.EC_ADDR_PORT, 0x2F);
 
         // 读取 EC 数据
-        return ReadIoPortByte(EC_DATA_PORT);
+        return ReadIoPortByte((ushort)ECMemoryTable.EC_DATA_PORT);
     }
 }

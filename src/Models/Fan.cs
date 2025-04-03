@@ -77,9 +77,9 @@ public class Fan
             return MethodServices.SetValue(MethodName.MaxFanSpeedSwitch, (byte)0);
         }
     }
-    public static bool GetMaxFanSpeedSwitch()
+    public static byte GetMaxFanSpeedSwitch()
     {
-            return MethodServices.GetValue<bool>(MethodName.MaxFanSpeedSwitch);
+        return MethodServices.GetValue<byte>(MethodName.MaxFanSpeedSwitch);
     }
 
     [Obsolete("This method is obsolete.")]

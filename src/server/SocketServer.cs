@@ -8,7 +8,6 @@ namespace JiaoLongWMI.server;
 
 public class SocketServer
 {
-    private readonly CliProgramEnumerationType _socketProgramEnumerationType = new CliProgramEnumerationType();
 
     public SocketServer(string[] args)
     {
@@ -88,6 +87,6 @@ public class SocketServer
         json.TryGetPropertyValue("type", out JsonNode typeName);
         json.TryGetPropertyValue("method", out JsonNode methodName);
         json.TryGetPropertyValue("args", out JsonNode args);
-        return _socketProgramEnumerationType.EumType(typeName.ToString(), methodName.ToString(),args.AsArray().Select(item => item.ToString()).ToArray());
+        return new CliProgramEnumerationType().EumType(typeName.ToString(), methodName.ToString(),args.AsArray().Select(item => item.ToString()).ToArray());
     }
 }

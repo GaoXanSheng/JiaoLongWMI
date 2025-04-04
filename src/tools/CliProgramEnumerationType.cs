@@ -11,6 +11,7 @@ public class CliProgramEnumerationType
     private JsonObject callBack = new JsonObject();
     public static string ErrMag = null;
     private RGBBreathingLightEffect RgbBreathingLightEffect = new RGBBreathingLightEffect();
+
     private void CLI_Cpu(string methodName, string[] args)
     {
         if (methodName == "SetCpuShortPower")
@@ -46,6 +47,7 @@ public class CliProgramEnumerationType
             RgbBreathingLightEffect.Stop();
         }
     }
+
     private void CLI_Keyboard(string methodName, string[] args)
     {
         if (methodName == "ColorSet")
@@ -119,6 +121,10 @@ public class CliProgramEnumerationType
             {
                 callBack["result"] = GPUMode.Set(GPUModeEnum).ToString();
             }
+            else
+            {
+                callBack["result"] = false;
+            }
         }
 
         if (methodName == "Get")
@@ -160,18 +166,22 @@ public class CliProgramEnumerationType
             {
                 callBack["result"] = Fan.GetFanSpeed();
             }
+
             if (methodName == "SetFanSpeed")
             {
                 callBack["result"] = Fan.SetFanSpeed(args[0]);
             }
+
             if (methodName == "GetFanLevel")
             {
                 callBack["result"] = Fan.GetFanLevel();
             }
+
             if (methodName == "SetMaxFanSpeedSwitch")
             {
                 callBack["result"] = Fan.SetMaxFanSpeedSwitch(args[0]);
             }
+
             if (methodName == "GetMaxFanSpeedSwitch")
             {
                 callBack["result"] = Fan.GetMaxFanSpeedSwitch();
@@ -198,10 +208,11 @@ public class CliProgramEnumerationType
             CLI_PerformaceMode(methodName, args);
         }
 
-        if (typeName=="RGBBreathingLightEffect")
+        if (typeName == "RGBBreathingLightEffect")
         {
             CLI_RGBBreathingLightEffect(methodName, args);
         }
+
         if (ErrMag != null)
         {
             callBack["msg"] = ErrMag;
@@ -210,5 +221,4 @@ public class CliProgramEnumerationType
 
         return callBack.ToJsonString();
     }
-    
 }

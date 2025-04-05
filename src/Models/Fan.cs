@@ -20,11 +20,11 @@ public class Fan
             return librarySutatus;
         }
 
-        winRing0.ECRamWriteExt_Direct((ushort)ECMemoryTable.Fan1_RPM_SET, outSpeed);
+        winRing0.ECRamWriteExt_Direct((ushort)ECMemoryTable.Fan_RPM_SET, outSpeed);
         byte mask = winRing0.ECRamReadExt_Direct(0xB20);
         mask |= 0x02;
         winRing0.ECRamWriteExt_Direct(0xB20, mask);
-        
+
         winRing0.Dispose();
         return "Fan Speed Set OK";
     }

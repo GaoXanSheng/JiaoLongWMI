@@ -172,11 +172,6 @@ public class CliProgramEnumerationType
                 callBack["result"] = Fan.SetFanSpeed(args[0]);
             }
 
-            if (methodName == "GetFanLevel")
-            {
-                callBack["result"] = Fan.GetFanLevel();
-            }
-
             if (methodName == "SetMaxFanSpeedSwitch")
             {
                 callBack["result"] = Fan.SetMaxFanSpeedSwitch(args[0]);

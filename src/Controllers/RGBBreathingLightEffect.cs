@@ -101,7 +101,6 @@ class RGBBreathingLightEffect
                     var color = GetGradientColor(startColor, endColor, percent);
                     RGB_Set(color.R, color.G, color.B);
                     Thread.Sleep(delay); // Wait for the specified delay
-                    GC.Collect(); // Collect garbage to free up memory
                 }
             }
         }

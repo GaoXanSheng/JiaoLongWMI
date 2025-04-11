@@ -2,7 +2,7 @@
 
 namespace JiaoLongWMI.tools
 {
-	public class Ols : IDisposable
+	public class WinIo : IDisposable
 	{
 		private string dllName = "WinIo64.dll";
 
@@ -32,7 +32,7 @@ namespace JiaoLongWMI.tools
 		private ushort EC_ADDR_PORT = 0x4E;
 		private ushort EC_DATA_PORT = 0x4F;
 		public bool WinIoState { get; set; }
-		public Ols()
+		public WinIo()
 		{
 			winioHandle = LoadLibrary(dllName);
 			WinIoState = InitializeWinIo();

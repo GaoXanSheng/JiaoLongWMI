@@ -1,6 +1,6 @@
 ﻿namespace JiaoLongWMI.tools;
 
-public class ECController:Ols
+public class ECController:WinIo
 {
 	public ECController()
 	{

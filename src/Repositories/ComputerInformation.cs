@@ -30,16 +30,4 @@ public class ComputerInformation
         }
         return res;
     }
-    public static JsonObject GetWindowsInfo()
-    {
-        var res = new JsonObject();
-        ManagementObjectSearcher searcher = new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem");
-        foreach (ManagementObject obj in searcher.Get())
-        {
-            // 获取 BIOS 版本
-            res["Caption"] = obj["Caption"].ToString();
-            res["Version"] = obj["BuildNumber"].ToString();
-        }
-        return res;
-    }
 }

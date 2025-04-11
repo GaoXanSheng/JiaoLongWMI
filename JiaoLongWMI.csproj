@@ -19,6 +19,13 @@
 	<PackageIcon>electron-icon.ico</PackageIcon>
 	<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	<NeutralLanguage>zh-Hans</NeutralLanguage>
+	<Title>JiaoLongWMI</Title>
+	<Authors>GaoXanSheng</Authors>
+	<Description>JiaoLongWMI</Description>
+	<Copyright>GaoXanSheng</Copyright>
+	<PackageLicenseUrl>https://github.com/GaoXanSheng/JiaoLongWMI/blob/master/LICENSE</PackageLicenseUrl>
+	<RepositoryUrl>git@github.com:GaoXanSheng/JiaoLongWMI.git</RepositoryUrl>
+	<RepositoryType>Git</RepositoryType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

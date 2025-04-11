@@ -159,7 +159,10 @@ public class CliProgramEnumerationType
         {
             CLI_Cpu(methodName, args);
         }
-
+        if (typeName=="GetHardwareMonitorInfo")
+        {
+	        callBack["result"] = ComputerInformation.GetHardwareMonitorInfo();
+        }
         if (typeName == "Fan")
         {
             if (methodName == "GetFanSpeed")

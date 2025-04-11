@@ -23,7 +23,7 @@ namespace JiaoLongWMI
                     parameter.Add(args[i]);
                 }
                 if (typeName == "SocketServer")
-                { 
+                {
                      new SocketServer(parameter.ToArray());
                 }
                 else

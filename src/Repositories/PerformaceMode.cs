@@ -1,8 +1,8 @@
 ﻿
-using JiaoLongWMI.WMIOperation.Method;
-using JiaoLongWMI.WMIOperation.System;
+using JiaoLongWMI.Constants;
+using JiaoLongWMI.Services;
 
-namespace JiaoLongWMI.Models;
+namespace JiaoLongWMI.Repositories;
 
 public class PerformaceMode
 {

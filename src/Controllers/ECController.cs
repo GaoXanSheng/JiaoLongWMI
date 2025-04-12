@@ -1,4 +1,7 @@
-﻿namespace JiaoLongWMI.tools;
+﻿using JiaoLongWMI.Constants;
+using JiaoLongWMI.Utils;
+
+namespace JiaoLongWMI.Controllers;
 
 public class ECController:WinIo
 {

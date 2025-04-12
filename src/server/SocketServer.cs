@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using System.Text;
 using System.Text.Json.Nodes;
-using JiaoLongWMI.tools;
-using Namotion.Reflection;
+using JiaoLongWMI.Controllers;
+using JiaoLongWMI.Utils;
 
 namespace JiaoLongWMI.server;
 
@@ -87,6 +87,7 @@ public class SocketServer
 		}
 	}
 
+	private CliProgramEnumerationType _cli = new CliProgramEnumerationType();
 	private string Decode(string msg)
 	{
 		// msg是个json 提取msg
@@ -96,7 +97,7 @@ public class SocketServer
 		json.TryGetPropertyValue("type", out JsonNode typeName);
 		json.TryGetPropertyValue("method", out JsonNode methodName);
 		json.TryGetPropertyValue("args", out JsonNode args);
-		return new CliProgramEnumerationType().EumType(typeName.ToString(), methodName.ToString(),
+		return _cli.EumType(typeName.ToString(), methodName.ToString(),
 			args.AsArray().Select(item => item.ToString()).ToArray());
 	}
 }

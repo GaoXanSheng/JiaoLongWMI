@@ -1,9 +1,7 @@
-﻿using JiaoLongWMI.Models;
+﻿using System.Drawing;
+using JiaoLongWMI.Repositories;
 
-namespace JiaoLongWMI.tools;
-
-using System.Drawing;
-
+namespace JiaoLongWMI.Controllers;
 class RGBBreathingLightEffect
 {
     // Create threads to run the effects synchronously

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace JiaoLongWMI.tools;
+namespace JiaoLongWMI.Utils;
 
 public class Logger
 {

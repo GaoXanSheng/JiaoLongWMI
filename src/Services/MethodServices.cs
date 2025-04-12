@@ -1,8 +1,8 @@
 ﻿using System.Management;
-using System.Runtime.InteropServices;
-using JiaoLongWMI.tools;
+using JiaoLongWMI.Constants;
+using JiaoLongWMI.Controllers;
 
-namespace JiaoLongWMI.WMIOperation.Method
+namespace JiaoLongWMI.Services
 {
     public static class MethodServices
     {

@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Nodes;
-using JiaoLongWMI.WMIOperation.Keyboard;
-using JiaoLongWMI.WMIOperation.Method;
+using JiaoLongWMI.Constants;
+using JiaoLongWMI.Services;
 
-namespace JiaoLongWMI.Models;
+namespace JiaoLongWMI.Repositories;
 
 public class Keyboard
 {

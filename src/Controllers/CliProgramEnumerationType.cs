@@ -1,17 +1,16 @@
 ﻿using System.Text.Json.Nodes;
-using JiaoLongWMI.Models;
-using JiaoLongWMI.WMIOperation;
-using JiaoLongWMI.WMIOperation.System;
-using GPUMode = JiaoLong16Pro.Models.GPUMode;
+using JiaoLongWMI.Constants;
+using JiaoLongWMI.Repositories;
 
-namespace JiaoLongWMI.tools;
+
+namespace JiaoLongWMI.Controllers;
 
 public class CliProgramEnumerationType
 {
     private JsonObject callBack = new JsonObject();
     public static string ErrMag = null;
     private RGBBreathingLightEffect RgbBreathingLightEffect = new RGBBreathingLightEffect();
-
+    private ComputerInformation _computer = new ComputerInformation();
     private void CLI_Cpu(string methodName, string[] args)
     {
         if (methodName == "SetCpuShortPower")
@@ -115,11 +114,10 @@ public class CliProgramEnumerationType
     {
         if (methodName == "Set")
         {
-            JiaoLongWMI.WMIOperation.GPUMode GPUModeEnum;
-            bool success = Enum.TryParse(args[0], out GPUModeEnum);
+            bool success = Enum.TryParse(args[0],out GPUMode gpuEnum);
             if (success)
             {
-                callBack["result"] = GPUMode.Set(GPUModeEnum).ToString();
+                callBack["result"] = GPU.Set(gpuEnum).ToString();
             }
             else
             {
@@ -129,7 +127,7 @@ public class CliProgramEnumerationType
 
         if (methodName == "Get")
         {
-            callBack["result"] = GPUMode.Get().ToString();
+            callBack["result"] = GPU.Get().ToString();
         }
     }
 
@@ -161,7 +159,7 @@ public class CliProgramEnumerationType
         }
         if (typeName=="GetHardwareMonitorInfo")
         {
-	        callBack["result"] = ComputerInformation.GetHardwareMonitorInfo();
+	        callBack["result"] = _computer.GetHardwareMonitorInfo();
         }
         if (typeName == "Fan")
         {
@@ -217,6 +215,6 @@ public class CliProgramEnumerationType
             ErrMag = null;
         }
 
-        return callBack.ToJsonString();
+        return callBack.ToString();
     }
 }

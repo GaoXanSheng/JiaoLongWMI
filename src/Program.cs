@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using JiaoLongWMI.server;
-using JiaoLongWMI.tools;
+using JiaoLongWMI.Controllers;
+using JiaoLongWMI.Utils;
 
 namespace JiaoLongWMI
 {

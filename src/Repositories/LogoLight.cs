@@ -1,7 +1,7 @@
-﻿using JiaoLongWMI.WMIOperation;
-using JiaoLongWMI.WMIOperation.Method;
+﻿using JiaoLongWMI.Constants;
+using JiaoLongWMI.Services;
 
-namespace JiaoLongWMI.Models;
+namespace JiaoLongWMI.Repositories;
 
 public class LogoLight
 {

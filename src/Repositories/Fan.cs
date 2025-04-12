@@ -1,8 +1,10 @@
 ﻿using System.Text.Json.Nodes;
-using JiaoLongWMI.tools;
-using JiaoLongWMI.WMIOperation.Method;
+using JiaoLongWMI.Constants;
+using JiaoLongWMI.Controllers;
+using JiaoLongWMI.Services;
 
-namespace JiaoLongWMI.Models;
+
+namespace JiaoLongWMI.Repositories;
 
 public class Fan
 {

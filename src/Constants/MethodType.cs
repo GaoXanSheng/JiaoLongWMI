@@ -1,4 +1,4 @@
-﻿namespace JiaoLongWMI.WMIOperation.Method
+﻿namespace JiaoLongWMI.Constants
 {
     public enum MethodType
     {

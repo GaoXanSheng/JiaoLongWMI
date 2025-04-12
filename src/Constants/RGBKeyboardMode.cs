@@ -1,4 +1,4 @@
-﻿namespace JiaoLongWMI.WMIOperation.Keyboard
+﻿namespace JiaoLongWMI.Constants
 {
     public enum RGBKeyboardMode : byte
     {

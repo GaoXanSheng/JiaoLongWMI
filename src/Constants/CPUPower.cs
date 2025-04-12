@@ -1,4 +1,4 @@
-﻿namespace JiaoLongWMI.WMIOperation
+﻿namespace JiaoLongWMI.Constants
 {
     public enum CPUPower : byte
     {

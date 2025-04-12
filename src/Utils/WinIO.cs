@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace JiaoLongWMI.tools
+namespace JiaoLongWMI.Utils
 {
 	public class WinIo : IDisposable
 	{

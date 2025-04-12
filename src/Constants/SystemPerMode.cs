@@ -1,4 +1,4 @@
-﻿namespace JiaoLongWMI.WMIOperation.System
+﻿namespace JiaoLongWMI.Constants
 {
     public enum SystemPerMode : byte
     {

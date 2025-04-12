@@ -1,4 +1,4 @@
-﻿namespace JiaoLongWMI.WMIOperation.Event
+﻿namespace JiaoLongWMI.Constants
 {
     public enum EventName : byte
     {
@@ -12,22 +12,22 @@
         RGBKeyboardMode = 8,
         CapsLkState = 9,
         AmbientlightState = 10,
-        CalculatorStart = 11, 
+        CalculatorStart = 11,
         DefaultBrowserStart = 12,
         NumLockState = 13,
         ScrlockState = 14,
         SystemPerMode = 15,
-        FN_J = 16, 
-        FN_F = 17, 
-        FN_0 = 18, 
-        FN_1 = 19, 
-        FN_2 = 20, 
+        FN_J = 16,
+        FN_F = 17,
+        FN_0 = 18,
+        FN_1 = 19,
+        FN_2 = 20,
         FN_3 = 21,
-        FN_4 = 22, 
-        FN_5 = 24, 
+        FN_4 = 22,
+        FN_5 = 24,
         PanelRefreshRate = 25,
         CPUFanSpeed = 26,
-        GPUFanSpeed = 32, 
+        GPUFanSpeed = 32,
         WinKeyLock = 33,
         Reserved_22 = 34,
         Reserved_23 = 35,

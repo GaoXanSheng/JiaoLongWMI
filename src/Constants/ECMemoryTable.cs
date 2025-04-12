@@ -1,4 +1,4 @@
-﻿namespace JiaoLongWMI;
+﻿namespace JiaoLongWMI.Constants;
 
 public enum ECMemoryTable : UInt16
 {

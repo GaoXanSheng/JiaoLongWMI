@@ -89,14 +89,18 @@ namespace JiaoLongWMI.Services
 
         private static T GetDefaultValue<T>()
         {
-            return typeof(T) switch
-            {
-                var t when t == typeof(Tuple<int, int>) =>
-                    (T)(object)new Tuple<int, int>(-1, -1),
-                var t when t == typeof(Tuple<int, int, int>) =>
-                    (T)(object)new Tuple<int, int, int>(-1, -1, -1),
-                _ => (T)(object)byte.MaxValue
-            };
+	        object value = typeof(T) switch
+	        {
+		        var t when t == typeof(Tuple<int, int>) =>
+			        new Tuple<int, int>(-1, -1),
+		        var t when t == typeof(Tuple<int, int, int>) =>
+			        new Tuple<int, int, int>(-1, -1, -1),
+		        var t when t == typeof(byte) =>
+			        byte.MaxValue,
+		        _ => default(T)
+	        };
+
+	        return (T)value!;
         }
     }
 }

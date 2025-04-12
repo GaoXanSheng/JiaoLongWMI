@@ -16,7 +16,7 @@ public class ComputerInformation
 		IsStorageEnabled = true,
 		IsBatteryEnabled = true,
 	};
-	private bool _isUpdate = false;
+	private bool _isUpdate;
 	public ComputerInformation()
 	{
 		Open();
@@ -73,6 +73,10 @@ public class ComputerInformation
 	}
 	public JsonObject GetHardwareMonitorInfo()
 	{
+		if (_isUpdate)
+		{
+			return _res;
+		}
 		Update();
 		return _res;
 	}

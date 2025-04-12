@@ -12,8 +12,8 @@ public class GPU
     {
      return MethodServices.SetValue(MethodName.GPUMode, mode);
     }
-    public static GPU Get()
+    public static GPUMode Get()
     {
-        return MethodServices.GetValue<GPU>(MethodName.GPUMode);
+        return MethodServices.GetValue<GPUMode>(MethodName.GPUMode);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Nodes;
 using JiaoLongWMI.Constants;
 using JiaoLongWMI.Repositories;
+using JiaoLongWMI.server;
 
 
 namespace JiaoLongWMI.Controllers;
@@ -10,7 +11,7 @@ public class CliProgramEnumerationType
     private JsonObject callBack = new JsonObject();
     public static string ErrMag = null;
     private RGBBreathingLightEffect RgbBreathingLightEffect = new RGBBreathingLightEffect();
-    private ComputerInformation _computer = new ComputerInformation();
+
     private void CLI_Cpu(string methodName, string[] args)
     {
         if (methodName == "SetCpuShortPower")
@@ -159,7 +160,7 @@ public class CliProgramEnumerationType
         }
         if (typeName=="GetHardwareMonitorInfo")
         {
-	        callBack["result"] = _computer.GetHardwareMonitorInfo();
+	        callBack["result"] = new ComputerInformation().GetHardwareMonitorInfo();
         }
         if (typeName == "Fan")
         {

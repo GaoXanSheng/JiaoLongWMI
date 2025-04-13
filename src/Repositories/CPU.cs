@@ -27,7 +27,16 @@ public class CPU
         }
         return MethodServices.SetValue(MethodName.CPUPower, CPUPower.CloseState);
     }
+    public static bool GetCustomMode()
+    {
+		    var res =  MethodServices.GetValue<CPUPower>(MethodName.CPUPower);
+		    if (res == CPUPower.OpenState)
+		    {
+			    return true;
+		    }
 
+		    return false;
+    }
 
     /**
      * 全核心满载电压

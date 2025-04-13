@@ -25,3 +25,12 @@ Content-Type: application/json
   "method": "GetFanSpeed",
   "args":[]
 }
+### 风扇
+POST http://localhost:9871/
+Content-Type: application/json
+
+{
+  "type": "CPU",
+  "method": "GetCustomMode",
+  "args":[]
+}

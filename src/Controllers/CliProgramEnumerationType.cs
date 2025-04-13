@@ -28,7 +28,10 @@ public class CliProgramEnumerationType
         {
             callBack["result"] = CPU.OpenCustomMode(Convert.ToBoolean(args[0])).ToString();
         }
-
+        if (methodName == "GetCustomMode")
+        {
+	        callBack["result"] = CPU.GetCustomMode().ToString();
+        }
         if (methodName == "SetCPUTempWall")
         {
             callBack["result"] = CPU.SetCPUTempWall(Convert.ToByte(args[0])).ToString();

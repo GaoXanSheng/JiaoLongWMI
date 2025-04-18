@@ -6,7 +6,7 @@ namespace JiaoLongWMI.server;
 
 public class SocketServer : SocketControllers
 {
-	private static ComputerInformation _computer = null;
+	private static ComputerInformation _computer = new ComputerInformation();
 	public SocketServer(string[] args) : base(args[0], args[1])
 	{
 		_computer = new ComputerInformation();

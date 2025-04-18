@@ -12,6 +12,7 @@
     <SignAssembly>False</SignAssembly>
     <PackAsTool>False</PackAsTool>
     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
 	<PublishSingleFile>true</PublishSingleFile>
 	<IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
 	<LangVersion>default</LangVersion>
@@ -59,6 +60,13 @@
 
   <ItemGroup>
     <TrimmerRootAssembly Include="System.Management" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="app.manifest" />
+    <ApplicationDefinition Include="app.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </ApplicationDefinition>
   </ItemGroup>
 
 </Project>

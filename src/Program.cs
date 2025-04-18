@@ -1,18 +1,18 @@
 ﻿using System.Text;
 using JiaoLongWMI.server;
 using JiaoLongWMI.Controllers;
+using JiaoLongWMI.Services;
 using JiaoLongWMI.Utils;
 
 namespace JiaoLongWMI
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
+	      public static ShutdownEventDispatcher ShutdownDispatcher { get; } = new();
         [STAThread]
         static void Main(string[] args)
         {
+	        AppDomain.CurrentDomain.ProcessExit += (_, _) => ShutdownDispatcher.Trigger();
             Console.OutputEncoding = Encoding.UTF8;
             if (args.Length != 0)
             {
@@ -25,7 +25,7 @@ namespace JiaoLongWMI
                 }
                 if (typeName == "SocketServer")
                 {
-                     new SocketServer(parameter.ToArray());
+	               new SocketServer(parameter.ToArray());
                 }
                 else
                 {

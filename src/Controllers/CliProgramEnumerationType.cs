@@ -163,7 +163,10 @@ public class CliProgramEnumerationType
         }
         if (typeName=="GetHardwareMonitorInfo")
         {
-	        callBack["result"] = new ComputerInformation().GetHardwareMonitorInfo();
+	        using (ComputerInformation computerInformation = new ComputerInformation())
+	        {
+		        callBack["result"] = computerInformation.GetHardwareMonitorInfo();
+	        }
         }
         if (typeName == "Fan")
         {

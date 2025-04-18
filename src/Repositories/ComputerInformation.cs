@@ -3,7 +3,7 @@ using LibreHardwareMonitor.Hardware;
 
 namespace JiaoLongWMI.Repositories;
 
-public class ComputerInformation
+public class ComputerInformation: IDisposable
 {
 	private JsonObject _res = new JsonObject();
 	private Computer _computer =  new Computer {
@@ -85,7 +85,7 @@ public class ComputerInformation
 	{
 		_computer.Open();
 	}
-	public void Close()
+	public void Dispose()
 	{
 		_computer.Close();
 	}

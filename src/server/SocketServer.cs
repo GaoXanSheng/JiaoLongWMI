@@ -6,9 +6,12 @@ namespace JiaoLongWMI.server;
 
 public class SocketServer : SocketControllers
 {
-	public SocketServer(string[] args) : base(args[0], args[1]) { }
-
-	private ComputerInformation _computer = new ComputerInformation();
+	private static ComputerInformation _computer = null;
+	public SocketServer(string[] args) : base(args[0], args[1])
+	{
+		_computer = new ComputerInformation();
+		Program.ShutdownDispatcher.Subscribe(_computer.Dispose);
+	}
 
 	public override string Parse(JsonNode typeName, JsonNode methodName, JsonNode args)
 	{
@@ -16,11 +19,11 @@ public class SocketServer : SocketControllers
 		// GetHardwareMonitorInfo 很耗时，分离线程
 		if (typeName.ToString() == "GetHardwareMonitorInfo")
 		{
-			var callBack = new JsonObject();
-			callBack["typeName"] = typeName.DeepClone();
-			callBack["methodName"] = methodName.DeepClone();
-			callBack["result"] = _computer.GetHardwareMonitorInfo().DeepClone();
-			return callBack.ToString();
+				var callBack = new JsonObject();
+				callBack["typeName"] = typeName.DeepClone();
+				callBack["methodName"] = methodName.DeepClone();
+				callBack["result"] = _computer.GetHardwareMonitorInfo().DeepClone();
+				return callBack.ToString();
 		}
 
 		return new CliProgramEnumerationType().EumType(typeName.ToString(), methodName.ToString(),

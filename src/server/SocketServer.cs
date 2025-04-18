@@ -10,7 +10,6 @@ public class SocketServer : SocketControllers
 	public SocketServer(string[] args) : base(args[0], args[1])
 	{
 		_computer = new ComputerInformation();
-		Program.ShutdownDispatcher.Subscribe(_computer.Dispose);
 	}
 
 	public override string Parse(JsonNode typeName, JsonNode methodName, JsonNode args)

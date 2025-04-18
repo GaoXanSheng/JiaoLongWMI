@@ -16,11 +16,12 @@ public class ComputerInformation: IDisposable
 		IsStorageEnabled = true,
 		IsBatteryEnabled = true,
 	};
-	private bool _isUpdate;
+
 	public ComputerInformation()
 	{
 		Open();
 	}
+	private bool _isUpdate;
 	private void Update()
 	{
 		if (_isUpdate)
@@ -81,7 +82,7 @@ public class ComputerInformation: IDisposable
 		return _res;
 	}
 
-	private void Open()
+	public void Open()
 	{
 		_computer.Open();
 	}

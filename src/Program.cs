@@ -8,11 +8,9 @@ namespace JiaoLongWMI
 {
     internal static class Program
     {
-	      public static ShutdownEventDispatcher ShutdownDispatcher { get; } = new();
         [STAThread]
         static void Main(string[] args)
         {
-	        AppDomain.CurrentDomain.ProcessExit += (_, _) => ShutdownDispatcher.Trigger();
             Console.OutputEncoding = Encoding.UTF8;
             if (args.Length != 0)
             {

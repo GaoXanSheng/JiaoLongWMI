@@ -2,73 +2,98 @@
 using JiaoLongWMI.Repositories;
 
 namespace JiaoLongWMI.Controllers;
+
+/// <summary>
+/// RGB 呼吸灯效果控制器。
+/// </summary>
 class RGBBreathingLightEffect
 {
-    // Create threads to run the effects synchronously
+    // 创建线程以同步运行效果
     // private Thread breathingEffectThread;
     private Thread gradientEffectThread ;
-    // Usage example:
+    // 用法示例:
     public RGBBreathingLightEffect()
     {
         // breathingEffectThread = new Thread(ApplyBreathingLightEffect);
         gradientEffectThread = new Thread(ApplyLoopingGradientColor);
     }
 
+    /// <summary>
+    /// 启动效果。
+    /// </summary>
     public void Start()
     {
-        // Start the threads
+        // 启动线程
         // breathingEffectThread.Start();
         gradientEffectThread.Start();
     }
-    // Stop the threads
+    /// <summary>
+    /// 停止效果。
+    /// </summary>
     public void Stop()
     {
         running = false;
     }
     private bool running = true;
 
-    // Simulating LightBrightnessSet function
+    /// <summary>
+    /// 模拟 LightBrightnessSet 函数。
+    /// </summary>
+    /// <param name="brightness">亮度值。</param>
     private void LightBrightnessSet(byte brightness)
     {
-        // Add logic to set the light brightness here
+        // 在此处添加设置灯光亮度的逻辑
         Keyboard.LightBrightness.Set(brightness);
-        Thread.Sleep(50); // Simulate the delay
+        Thread.Sleep(50); // 模拟延迟
     }
 
-    // Simulating RGB_Set function
+    /// <summary>
+    /// 模拟 RGB_Set 函数。
+    /// </summary>
+    /// <param name="r">红色分量。</param>
+    /// <param name="g">绿色分量。</param>
+    /// <param name="b">蓝色分量。</param>
     private void RGB_Set(byte r, byte g, byte b)
     {
-        // Add logic to set the RGB color here
+        // 在此处添加设置 RGB 颜色的逻辑
         Keyboard.Color.Set(r, g, b);
-        Thread.Sleep(50); // Simulate the delay
+        Thread.Sleep(50); // 模拟延迟
     }
 
-    // Apply the Breathing Light Effect
+    /// <summary>
+    /// 应用呼吸灯效果。
+    /// </summary>
     private void ApplyBreathingLightEffect()
     {
-        const byte minBrightness = 0; // Minimum brightness level
-        const byte maxBrightness = 3; // Maximum brightness level
-        const int delay = 500; // Delay in milliseconds between each brightness step
+        const byte minBrightness = 0; // 最小亮度级别
+        const byte maxBrightness = 3; // 最大亮度级别
+        const int delay = 500; // 每个亮度步长之间的延迟（毫秒）
 
         while (running)
         {
-            // Increase brightness
+            // 增加亮度
             for (byte brightness = minBrightness; brightness < maxBrightness; brightness++)
             {
                  LightBrightnessSet(brightness);
-                 Thread.Sleep(delay); // Wait for the specified delay
+                 Thread.Sleep(delay); // 等待指定的延迟
             }
 
-            // Decrease brightness
+            // 降低亮度
             for (byte brightness = maxBrightness; brightness > minBrightness; brightness--)
             {
                  LightBrightnessSet(brightness);
-                 Thread.Sleep(delay); // Wait for the specified delay
+                 Thread.Sleep(delay); // 等待指定的延迟
             }
         }
     }
 
-    // Get Gradient Color
+    /// <summary>
+    /// 获取渐变颜色。
+    /// </summary>
+    /// <param name="startColor">起始颜色。</param>
+    /// <param name="endColor">结束颜色。</param>
+    /// <param name="percent">百分比。</param>
+    /// <returns>渐变颜色。</returns>
     private Color GetGradientColor(Color startColor, Color endColor, float percent)
     {
         byte r = (byte)(startColor.R + (endColor.R - startColor.R) * percent);
@@ -76,15 +101,17 @@ class RGBBreathingLightEffect
         byte b = (byte)(startColor.B + (endColor.B - startColor.B) * percent);
         return Color.FromArgb(r, g, b);
     }
-    // Apply Looping Gradient Color
+    /// <summary>
+    /// 应用循环渐变颜色。
+    /// </summary>
     private void ApplyLoopingGradientColor()
     {
         const int steps = 100;
-        const int delay = 50; // Milliseconds
+        const int delay = 50; // 毫秒
         var colors = new[] {
-            Color.Red, // Red
-            Color.Green, // Green
-            Color.Blue  // Blue
+            Color.Red, // 红色
+            Color.Green, // 绿色
+            Color.Blue  // 蓝色
         };
         while (running)
         {
@@ -98,10 +125,9 @@ class RGBBreathingLightEffect
                     float percent = (float)j / steps;
                     var color = GetGradientColor(startColor, endColor, percent);
                     RGB_Set(color.R, color.G, color.B);
-                    Thread.Sleep(delay); // Wait for the specified delay
+                    Thread.Sleep(delay); // 等待指定的延迟
                 }
             }
         }
     }
 }
-

@@ -74,9 +74,9 @@ namespace JiaoLongWMI
             Console.WriteLine();
             Console.WriteLine("  RGBBreathingLightEffect:");
             Console.WriteLine("    Start: 启动 RGB 呼吸灯效果，无参数");
-            Console.WriteLine("      示例：JiaoLongWMI RGBBreathingLightEffect Start");
+            Console.WriteLine("      示例：JiaoLongWMI RGBBreathingLightEffect Start --parameter On");
             Console.WriteLine("    Stop: 停止 RGB 呼吸灯效果，无参数");
-            Console.WriteLine("      示例：JiaoLongWMI RGBBreathingLightEffect Stop");
+            Console.WriteLine("      示例：JiaoLongWMI RGBBreathingLightEffect Stop --parameter Off");
             Console.WriteLine();
         }
     }

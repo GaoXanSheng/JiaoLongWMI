@@ -22,7 +22,7 @@ public class SocketControllers
     /// URL 地址。
     /// </summary>
     public string Url { get; private set; }
-
+		public HttpListener listener { get; private set; }
     /// <summary>
     /// 构造函数，初始化 Socket 控制器。
     /// </summary>
@@ -33,7 +33,7 @@ public class SocketControllers
         Port = port;
         Host = host;
         Url = "http://" + Host + ":" + Port + "/";
-        HttpListener listener = new HttpListener();
+				listener = new HttpListener();
         listener.Prefixes.Add(Url);
         try
         {

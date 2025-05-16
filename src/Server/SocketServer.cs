@@ -21,6 +21,11 @@ public class SocketServer : SocketControllers
         _computer = new ComputerInformation();
     }
 
+    public void Close()
+    {
+	    _computer.Dispose();
+	    listener.Close();
+    }
     /// <summary>
     /// 解析来自 Socket 客户端的请求，并调用相应的方法。
     /// </summary>

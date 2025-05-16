@@ -8,7 +8,7 @@ namespace JiaoLongWMI.Utils
     public class WinIo : IDisposable
     {
         private string dllName = "WinIo64.dll";
-
+				private string sysName = "WinIo64.sys";
         // 导入 WinIo64.dll 中的函数
         [DllImport("WinIo64.dll", CallingConvention = CallingConvention.StdCall)]
         public static extern bool InitializeWinIo();
@@ -45,6 +45,8 @@ namespace JiaoLongWMI.Utils
         /// </summary>
         public WinIo()
         {
+						EmbeddedResourceHelper.ExtractResourceToExeDir($"JiaoLongWMI.drivers.{dllName}",dllName);
+						EmbeddedResourceHelper.ExtractResourceToExeDir($"JiaoLongWMI.drivers.{sysName}",sysName);
             winioHandle = LoadLibrary(dllName);
             WinIoState = InitializeWinIo();
         }

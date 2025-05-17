@@ -48,12 +48,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
-	
+
 	<ItemGroup>
 		<EmbeddedResource Include="drivers\WinIo64.sys" />
 		<EmbeddedResource Include="drivers\WinIo64.dll" />
 	</ItemGroup>
-	
+
   <ItemGroup>
     <Content Include="electron-icon.ico" />
   </ItemGroup>

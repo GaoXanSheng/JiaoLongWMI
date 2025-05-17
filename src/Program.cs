@@ -18,6 +18,12 @@ namespace JiaoLongWMI
 		[STAThread]
 		static async Task Main(string[] args)
 		{
+			if (!Environment.UserInteractive)
+			{
+				// 服务启动
+				JiaoLongWMIService.Run(args);
+				return;
+			}
 			if (args.Length == 0)
 			{
 				CommandLineHelper.ShowUsage();
@@ -56,20 +62,36 @@ namespace JiaoLongWMI
 					return;
 				}
 
-				if (typeName == "JiaoLongWMIService" && (methodName == "install" || methodName == "uninstall" || methodName == "start" || methodName == "stop"))
+				if (typeName == "JiaoLongWMIService" && (methodName == "install" || methodName == "uninstall" ||
+				                                         methodName == "start" || methodName == "stop"))
 				{
-					// 让 Topshelf 接管命令行参数处理
-					JiaoLongWMIServiceConfiguration.ConfigureService(methodName);
+					switch (methodName.ToLower())
+					{
+						case "install":
+							JiaoLongWMIService.Install();
+							break;
+						case "uninstall":
+							JiaoLongWMIService.Uninstall();
+							break;
+						case "start":
+							JiaoLongWMIService.StartService();
+							break;
+						case "stop":
+							JiaoLongWMIService.StopService();
+							break;
+						default:
+							Console.WriteLine("未知命令。支持: install, uninstall, start, stop");
+							break;
+					}
 					return;
 				}
 
-				if (typeName !=null && methodName != null && parameter != null)
+				if (typeName != null && methodName != null && parameter != null)
 				{
 					Logger.Info(new CliProgramEnumerationType().EumType(typeName, methodName, parameter));
 					return;
 				}
 			}, typeNameArgument, methodNameArgument, parameterOption);
-
 
 			// 执行命令。
 			await rootCommand.InvokeAsync(args);

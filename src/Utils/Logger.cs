@@ -15,10 +15,7 @@ namespace JiaoLongWMI.Utils
 		/// </summary>
 		private static string GetLogDirectory()
 		{
-				// 获取当前用户的个人文件夹路径
-				string userFolder = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-				string logFilePath = Path.Combine(userFolder, "JiaoLongWMI.log");
-				return logFilePath;
+				return AppDomain.CurrentDomain.BaseDirectory;
 		}
 
 		private static string GetLogFilePath()

@@ -31,18 +31,24 @@ namespace JiaoLongWMI.Utils
         }
 
         /// <summary>
-        /// 将嵌入资源解压到当前程序运行目录
+        /// 将嵌入资源解压到当前程序运行目录（若文件已存在则不重复解压）
         /// </summary>
         /// <param name="resourceName">嵌入资源完整名称</param>
         /// <param name="fileName">解压后的文件名</param>
         /// <returns>返回解压后的完整文件路径</returns>
         public static string ExtractResourceToExeDir(string resourceName, string fileName)
         {
-            string exeDir = AppContext.BaseDirectory;
-            string outputPath = Path.Combine(exeDir, fileName);
-            ExtractEmbeddedResourceToFile(resourceName, outputPath);
-            return outputPath;
+	        string exeDir = AppContext.BaseDirectory;
+	        string outputPath = Path.Combine(exeDir, fileName);
+
+	        if (!File.Exists(outputPath))
+	        {
+		        ExtractEmbeddedResourceToFile(resourceName, outputPath);
+	        }
+
+	        return outputPath;
         }
+
 
         /// <summary>
         /// 删除当前程序运行目录的指定文件（如果存在）

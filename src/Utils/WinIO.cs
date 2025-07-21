@@ -38,7 +38,7 @@ namespace JiaoLongWMI.Utils
         /// <summary>
         /// 获取或设置 WinIO 的状态。
         /// </summary>
-        public bool WinIoState { get; set; }
+        public bool State { get; set; }
 
         /// <summary>
         /// 构造函数，加载 WinIo64.dll 并初始化 WinIO。
@@ -48,7 +48,7 @@ namespace JiaoLongWMI.Utils
 						EmbeddedResourceHelper.ExtractResourceToExeDir($"JiaoLongWMI.drivers.{dllName}",dllName);
 						EmbeddedResourceHelper.ExtractResourceToExeDir($"JiaoLongWMI.drivers.{sysName}",sysName);
             winioHandle = LoadLibrary(dllName);
-            WinIoState = InitializeWinIo();
+            State = InitializeWinIo();
         }
 
         /// <summary>

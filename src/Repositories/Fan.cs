@@ -26,7 +26,7 @@ public class Fan
 
         using (ECController ec = new ECController())
         {
-            if (ec.WinIoState)
+            if (ec.State)
             {
                 ec.Fan1SetSpeed(outSpeed);
                 ec.Fan2SetSpeed(outSpeed);

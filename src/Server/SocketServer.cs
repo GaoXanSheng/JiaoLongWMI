@@ -10,7 +10,7 @@ namespace JiaoLongWMI.server;
 public class SocketServer : SocketControllers
 {
     // 用于获取计算机硬件信息的 ComputerInformation 对象。
-    private static ComputerInformation _computer = new ComputerInformation();
+    public static ComputerInformation _computer  = new ComputerInformation();
 
     /// <summary>
     /// 构造函数，初始化 Socket 服务器。
@@ -18,7 +18,7 @@ public class SocketServer : SocketControllers
     /// <param name="args">命令行参数，包含端口号和主机地址。</param>
     public SocketServer(string[] args) : base(args[0], args[1])
     {
-        _computer = new ComputerInformation();
+
     }
 
     public void Close()

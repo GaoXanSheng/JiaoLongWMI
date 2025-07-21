@@ -43,3 +43,16 @@ Content-Type: application/json
   "method": "",
   "args":[]
 }
+### SetFanCurve
+POST http://localhost:9871/
+Content-Type: application/json
+
+{
+  "type": "SetFanCurve",
+  "method": "SetFanCurve",
+  "args":[
+    { "temp": 60, "speed": 1500 },
+    { "temp": 80, "speed": 3000 },
+    { "temp": 100, "speed": 5800 }
+  ]
+}

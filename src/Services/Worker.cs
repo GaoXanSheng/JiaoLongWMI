@@ -45,7 +45,7 @@ public class Worker : BackgroundService
 	{
 		try
 		{
-			 new ServiceModeSocketServer(new[] { "9871", "127.0.0.1" });
+			new ServiceModeSocketServer(new[] { "9871", "127.0.0.1" });
 		}
 		catch (Exception ex)
 		{
@@ -54,6 +54,7 @@ public class Worker : BackgroundService
 	}
 
 	private static List<FanCurvePoint> fanCurve;
+	private int rpm = 0;
 
 	private void StartFanControlLoop(CancellationToken token)
 	{
@@ -87,6 +88,13 @@ public class Worker : BackgroundService
 
 				int temp = GetCpuTemperature();
 				int rpm = GetFanRpmForTemp(fanCurve, temp);
+				if (this.rpm == rpm)
+				{
+					return;
+				}
+
+				// 如果计算转速不等于的时候开始应用转速
+				this.rpm = rpm;
 				string result = Fan.SetFanSpeed(rpm.ToString());
 				Logger.Info($"温度: {temp}°C -> 转速: {rpm * 100} RPM，结果: {result}");
 			}

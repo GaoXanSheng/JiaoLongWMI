@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Nodes;
 using JiaoLongWMI.Controllers;
+using JiaoLongWMI.Services;
 using JiaoLongWMI.Utils;
 
 namespace JiaoLongWMI.server;
@@ -34,6 +35,7 @@ public class ServiceModeSocketServer : SocketServer
 				// 写文件，覆盖已有内容
 				File.WriteAllText(filePath, args.ToString());
 				callBack["result"] = "保存 配置文件 成功";
+				Worker.ReloadFanCurve(args.ToString());
 			}
 			catch (Exception ex)
 			{

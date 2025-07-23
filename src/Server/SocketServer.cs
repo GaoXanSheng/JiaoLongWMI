@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Nodes;
+﻿using System.Net;
+using System.Text.Json.Nodes;
 using JiaoLongWMI.Controllers;
 using JiaoLongWMI.Repositories;
 
@@ -11,7 +12,6 @@ public class SocketServer : SocketControllers
 {
     // 用于获取计算机硬件信息的 ComputerInformation 对象。
     public static ComputerInformation _computer  = new ComputerInformation();
-
     /// <summary>
     /// 构造函数，初始化 Socket 服务器。
     /// </summary>

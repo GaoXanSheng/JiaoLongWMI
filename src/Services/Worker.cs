@@ -54,7 +54,6 @@ public class Worker : BackgroundService
 	}
 
 	private static List<FanCurvePoint> fanCurve;
-	private int rpm = 0;
 
 	private void StartFanControlLoop(CancellationToken token)
 	{
@@ -88,15 +87,8 @@ public class Worker : BackgroundService
 
 				int temp = GetCpuTemperature();
 				int rpm = GetFanRpmForTemp(fanCurve, temp);
-				if (this.rpm == rpm)
-				{
-					return;
-				}
-
-				// 如果计算转速不等于的时候开始应用转速
-				this.rpm = rpm;
 				string result = Fan.SetFanSpeed(rpm.ToString());
-				Logger.Info($"温度: {temp}°C -> 转速: {rpm * 100} RPM，结果: {result}");
+				Logger.Info($"温度: {temp}°C -> 转速: {rpm} RPM，结果: {result}");
 			}
 			catch (Exception ex)
 			{
@@ -159,35 +151,25 @@ public class Worker : BackgroundService
 		if (curve == null || curve.Count == 0)
 		{
 			Logger.Info("GetFanRpmForTemp: 曲线为空，返回2000rpm");
-			return 20; // 返回20，表示转速“20”，后续乘以100才是2000rpm
+			return 2000;
 		}
 
 		curve = curve.OrderBy(p => p.temp).ToList();
 
 		Logger.Info($"GetFanRpmForTemp: 输入温度 {temperature}°C，风扇曲线点数 {curve.Count}");
 
-		int ExtractFirstTwoDigits(int rpm)
-		{
-			if (rpm <= 0) return 20; // 最低20，表示2000rpm
-
-			var rpmStr = rpm.ToString();
-			var firstTwoDigits = rpmStr.Length >= 2 ? rpmStr.Substring(0, 2) : rpmStr.PadRight(2, '0');
-			int val = int.Parse(firstTwoDigits);
-			return val < 15 ? 15 : val; // 最低15（1500rpm）
-		}
-
 		if (temperature <= curve[0].temp)
 		{
-			int val = ExtractFirstTwoDigits(curve[0].speed);
-			Logger.Info($"温度低于曲线最低点 {curve[0].temp}°C，返回值 {val * 100}（rpm）");
-			return val;
+			int rpm = curve[0].speed;
+			Logger.Info($"温度低于曲线最低点 {curve[0].temp}°C，返回值 {rpm}（rpm）");
+			return rpm;
 		}
 
 		if (temperature >= curve[^1].temp)
 		{
-			int val = ExtractFirstTwoDigits(curve[^1].speed);
-			Logger.Info($"温度高于曲线最高点 {curve[^1].temp}°C，返回值 {val * 100}（rpm）");
-			return val;
+			int rpm = curve[^1].speed;
+			Logger.Info($"温度高于曲线最高点 {curve[^1].temp}°C，返回值 {rpm}（rpm）");
+			return rpm;
 		}
 
 		for (int i = 0; i < curve.Count - 1; i++)
@@ -198,15 +180,13 @@ public class Worker : BackgroundService
 			if (temperature >= lower.temp && temperature <= upper.temp)
 			{
 				double ratio = (temperature - lower.temp) / (double)(upper.temp - lower.temp);
-				double interpolated = lower.speed + ratio * (upper.speed - lower.speed);
-				int rpmRaw = (int)interpolated;
-				int val = ExtractFirstTwoDigits(rpmRaw);
-				Logger.Info($"温度位于区间 [{lower.temp}°C, {upper.temp}°C], 原始转速: {rpmRaw}，返回值: {val * 100}（rpm）");
-				return val;
+				int interpolated = (int)(lower.speed + ratio * (upper.speed - lower.speed));
+				Logger.Info($"温度位于区间 [{lower.temp}°C, {upper.temp}°C], 得到转速: {interpolated}（rpm）");
+				return interpolated;
 			}
 		}
 
-		Logger.Info("未命中任何区间，返回20");
-		return 20;
+		Logger.Info("未命中任何区间，返回2000rpm");
+		return 2000;
 	}
 }

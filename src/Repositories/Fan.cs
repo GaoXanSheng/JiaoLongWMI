@@ -18,24 +18,33 @@ public class Fan
     /// <returns>设置结果信息。</returns>
     public static string SetFanSpeed(string inputSpeed)
     {
-        bool success = byte.TryParse(inputSpeed, out byte outSpeed);
-        if (!success)
-        {
-            return "Input Speed Error";
-        }
+	    if (string.IsNullOrWhiteSpace(inputSpeed))
+	    {
+		    return "Input Speed Error";
+	    }
 
-        using (ECController ec = new ECController())
-        {
-            if (ec.State)
-            {
-                ec.Fan1SetSpeed(outSpeed);
-                ec.Fan2SetSpeed(outSpeed);
-                return "Fan Speed Set OK";
-            }
-        }
+	    // 仅保留前两位字符
+	    string trimmedInput = inputSpeed.Length >= 2 ? inputSpeed.Substring(0, 2) : inputSpeed;
 
-        return "Fan Speed Set Error";
+	    bool success = byte.TryParse(trimmedInput, out byte outSpeed);
+	    if (!success)
+	    {
+		    return "Input Speed Error";
+	    }
+
+	    using (ECController ec = new ECController())
+	    {
+		    if (ec.State)
+		    {
+			    ec.Fan1SetSpeed(outSpeed);
+			    ec.Fan2SetSpeed(outSpeed);
+			    return "Fan Speed Set OK";
+		    }
+	    }
+
+	    return "Fan Speed Set Error";
     }
+
 
     /// <summary>
     /// 设置最大风扇转速开关。

@@ -6,7 +6,7 @@ namespace JiaoLongWMI.Controllers;
 /// <summary>
 /// EC 控制器，用于控制 EC 相关的操作，如风扇转速等。
 /// </summary>
-public class ECController : WinIo
+public class ECController : WinRing0EC
 {
     /// <summary>
     /// 构造函数，初始化 EC。
